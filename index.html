@@ -1,0 +1,925 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>🐬 돌고래하우스 — 신축빌라 분양 실무 지식</title>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;700;900&family=Black+Han+Sans&display=swap" rel="stylesheet">
+<style>
+:root{--navy:#0a1628;--blue:#1254a4;--cyan:#00c2d4;--gold:#f5a623;--green:#00c853;--red:#ff3d57;--purple:#7c4dff;--card-bg:#111f38;--card-border:#1e3a5f;--text:#e8f2ff;--muted:#6a90b8;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--navy);color:var(--text);min-height:100vh;}
+.header{background:linear-gradient(135deg,#071020,#0d1e38,#0a1628);border-bottom:2px solid var(--cyan);padding:24px 20px 20px;text-align:center;position:relative;overflow:hidden;}
+.header::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse at 50% 0%,rgba(0,194,212,.12),transparent 65%);}
+.header-logo{font-family:'Black Han Sans',sans-serif;font-size:28px;color:var(--cyan);letter-spacing:2px;position:relative;}
+.header-logo span{color:var(--gold);}
+.header-sub{font-size:13px;color:var(--muted);margin-top:4px;position:relative;}
+.main{max-width:960px;margin:0 auto;padding:24px 16px 80px;}
+.slabel{font-size:11px;font-weight:700;letter-spacing:2px;text-transform:uppercase;color:var(--cyan);margin-bottom:12px;display:flex;align-items:center;gap:8px;}
+.slabel::after{content:'';flex:1;height:1px;background:linear-gradient(to right,var(--card-border),transparent);}
+.cgrid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:36px;}
+.card{background:linear-gradient(135deg,#22c55e,#16a34a);border-radius:14px;padding:20px 16px 18px;cursor:pointer;transition:transform .18s,box-shadow .18s;position:relative;overflow:hidden;user-select:none;border:none;width:100%;text-align:left;}
+.card::before{content:'';position:absolute;top:-30px;right:-30px;width:80px;height:80px;background:rgba(255,255,255,.08);border-radius:50%;}
+.card:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(0,200,83,.3);}
+.card:active{transform:translateY(0);}
+.cico{font-size:22px;margin-bottom:10px;}
+.ctit{font-size:14px;font-weight:800;color:#0a2800;line-height:1.4;}
+.cbadge{position:absolute;top:10px;right:10px;background:rgba(255,255,255,.25);border-radius:50%;width:24px;height:24px;display:flex;align-items:center;justify-content:center;font-size:12px;}
+.card.b{background:linear-gradient(135deg,#3b82f6,#1d4ed8);}.card.b .ctit{color:#fff;}.card.b:hover{box-shadow:0 10px 30px rgba(59,130,246,.4);}
+.card.g{background:linear-gradient(135deg,#f59e0b,#d97706);}.card.g .ctit{color:#1a0800;}.card.g:hover{box-shadow:0 10px 30px rgba(245,158,11,.4);}
+.card.r{background:linear-gradient(135deg,#ef4444,#b91c1c);}.card.r .ctit{color:#fff;}.card.r:hover{box-shadow:0 10px 30px rgba(239,68,68,.4);}
+.card.p{background:linear-gradient(135deg,#8b5cf6,#6d28d9);}.card.p .ctit{color:#fff;}.card.p:hover{box-shadow:0 10px 30px rgba(139,92,246,.4);}
+.card.c{background:linear-gradient(135deg,#06b6d4,#0891b2);}.card.c .ctit{color:#fff;}.card.c:hover{box-shadow:0 10px 30px rgba(6,182,212,.4);}
+.card.d{background:linear-gradient(135deg,#374151,#1f2937);}.card.d .ctit{color:#fff;}
+.ov{position:fixed;inset:0;background:rgba(5,12,25,.92);backdrop-filter:blur(4px);z-index:9999;display:flex;align-items:flex-end;justify-content:center;opacity:0;pointer-events:none;transition:opacity .25s;}
+.ov.open{opacity:1;pointer-events:all;}
+.modal{background:linear-gradient(180deg,#14253d,#0d1a2e);border:1px solid var(--card-border);border-radius:20px 20px 0 0;width:100%;max-width:700px;max-height:90vh;overflow-y:auto;padding:0 0 40px;transform:translateY(40px);transition:transform .3s cubic-bezier(.22,1,.36,1);}
+.ov.open .modal{transform:translateY(0);}
+.modal::-webkit-scrollbar{width:4px;}.modal::-webkit-scrollbar-thumb{background:var(--card-border);border-radius:2px;}
+.mhandle{width:40px;height:4px;background:var(--card-border);border-radius:2px;margin:12px auto 0;}
+.mhead{padding:20px 24px 16px;border-bottom:1px solid var(--card-border);display:flex;align-items:center;gap:12px;position:sticky;top:0;background:#14253d;z-index:2;}
+.mheadico{font-size:28px;}
+.mheadtit{font-family:'Black Han Sans',sans-serif;font-size:20px;color:var(--cyan);line-height:1.2;flex:1;}
+.mclose{width:34px;height:34px;background:var(--card-bg);border:1px solid var(--card-border);border-radius:50%;color:var(--muted);cursor:pointer;font-size:16px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
+.mclose:hover{color:var(--red);border-color:var(--red);}
+.mbody{padding:24px 24px 0;}
+.def{background:rgba(0,194,212,.08);border-left:3px solid var(--cyan);border-radius:0 8px 8px 0;padding:16px 18px;margin-bottom:18px;font-size:14px;line-height:1.95;}
+.irow{display:flex;gap:10px;margin-bottom:12px;align-items:flex-start;}
+.irow .lb{background:var(--blue);color:#fff;font-size:11px;font-weight:700;padding:4px 10px;border-radius:20px;white-space:nowrap;flex-shrink:0;margin-top:2px;}
+.irow .vl{font-size:13px;line-height:1.85;color:var(--text);}
+.cgd{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:18px;}
+.cb{background:var(--card-bg);border:1px solid var(--card-border);border-radius:10px;padding:16px;}
+.cb h4{font-size:13px;font-weight:700;color:var(--cyan);margin-bottom:10px;}
+.cb p{font-size:13px;line-height:1.85;color:#aac0d8;}
+.tip{background:rgba(245,166,35,.1);border:1px solid rgba(245,166,35,.25);border-radius:10px;padding:16px 18px;margin:16px 0;font-size:13px;line-height:1.95;color:#f5c06a;}
+.tip strong{color:var(--gold);}
+.wrn{background:rgba(255,61,87,.08);border:1px solid rgba(255,61,87,.25);border-radius:10px;padding:16px 18px;margin:16px 0;font-size:13px;line-height:1.95;color:#ff8f9e;}
+.wrn strong{color:var(--red);}
+.ref{background:rgba(100,116,139,.08);border:1px solid rgba(100,116,139,.2);border-radius:10px;padding:16px 18px;margin:10px 0;font-size:13px;line-height:1.95;color:#cbd5e1;}
+.slist{margin:14px 0;}
+.si{display:flex;gap:14px;margin-bottom:14px;align-items:flex-start;}
+.sn{width:30px;height:30px;background:var(--blue);border-radius:50%;color:#fff;font-size:11px;font-weight:700;display:flex;align-items:center;justify-content:center;flex-shrink:0;min-width:30px;}
+.sn.gn{background:var(--green);}
+.sn.rn{background:var(--red);}
+.sn.gold{background:var(--gold);color:#1a0800;}
+.st{font-size:13px;line-height:1.9;color:var(--text);}
+.st strong{color:var(--cyan);}
+.msub{font-size:12px;font-weight:700;color:var(--gold);text-transform:uppercase;letter-spacing:1px;margin:22px 0 12px;padding-bottom:7px;border-bottom:1px solid var(--card-border);}
+.fbox{background:linear-gradient(135deg,rgba(18,84,164,.3),rgba(0,194,212,.1));border:1px solid var(--blue);border-radius:10px;padding:18px;text-align:center;margin:16px 0;font-size:15px;font-weight:700;color:#fff;line-height:2;}
+.tbl{width:100%;border-collapse:collapse;font-size:13px;margin:14px 0;}
+.tbl th{background:var(--card-bg);padding:10px 12px;text-align:left;color:var(--muted);font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:.8px;border-bottom:1px solid var(--card-border);}
+.tbl td{padding:10px 12px;border-bottom:1px solid rgba(30,58,95,.4);color:var(--text);line-height:1.7;}
+.tbl tr:hover td{background:rgba(30,95,168,.08);}
+.hc{color:var(--cyan);font-weight:700;}.hg{color:var(--gold);font-weight:700;}.hr{color:var(--red);font-weight:700;}.hgr{color:var(--green);font-weight:700;}
+.subbtn{display:flex;align-items:center;gap:10px;width:100%;background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.3);color:#e0b060;border-radius:10px;padding:16px 18px;font-size:14px;font-weight:700;cursor:pointer;font-family:inherit;text-align:left;margin-top:16px;transition:background .15s;}
+.subbtn:hover{background:rgba(245,158,11,.15);}
+.subbtn .arr{margin-left:auto;transition:transform .2s;}
+.subbtn.open .arr{transform:rotate(180deg);}
+.subinner{display:none;background:rgba(10,18,35,.85);border:1px solid rgba(245,158,11,.15);border-radius:10px;padding:20px;margin-top:8px;font-size:13.5px;line-height:2;color:#c8d8ec;}
+.subinner.open{display:block;}
+.subinner h4{display:none;}
+
+.subinner .danger{color:#ff9aaa;font-weight:700;}
+.subinner .note{background:rgba(255,61,87,.07);border:1px solid rgba(255,61,87,.2);border-radius:8px;padding:12px 14px;margin:12px 0;font-size:13px;line-height:1.9;color:#ffb3c0;}
+.hr-line{height:1px;background:var(--card-border);margin:20px 0;}
+p{font-size:13px;line-height:1.9;color:var(--text);margin-bottom:12px;}
+.sect-lead{font-size:13px;font-weight:700;color:var(--gold);margin:22px 0 8px 0;display:block;padding-bottom:5px;border-bottom:1px solid rgba(245,166,35,.2);}
+</style>
+</head>
+<body>
+<div class="header">
+  <div class="header-logo">🐬 돌고래<span>하우스</span></div>
+  <div class="header-sub">신축빌라 분양 실무 지식 — 카드를 클릭하면 자세한 내용을 볼 수 있어요</div>
+</div>
+<div class="main">
+
+<div class="slabel">🏠 매매절차 &amp; 대출구조</div>
+<div class="cgrid">
+  <button class="card b" onclick="openModal('매매절차')"><div class="cbadge">🏠</div><div class="cico">📋</div><div class="ctit">신축빌라 매매절차 A to Z</div></button>
+  <button class="card" onclick="openModal('전액대출')"><div class="cbadge">💡</div><div class="cico">🏦</div><div class="ctit">전액대출·무입주 — 사기야? 진짜야?</div></button>
+  <button class="card b" onclick="openModal('담보신용')"><div class="cbadge">📊</div><div class="cico">⚖️</div><div class="ctit">담보대출 vs 신용대출 차이</div></button>
+  <button class="card c" onclick="openModal('LTV_DSR')"><div class="cbadge">📐</div><div class="cico">📐</div><div class="ctit">LTV · DSR · DTI 쉽게 이해하기</div></button>
+  <button class="card p" onclick="openModal('후순위')"><div class="cbadge">➕</div><div class="cico">🔗</div><div class="ctit">후순위 대출·은행융자 뜻</div></button>
+  <button class="card d" onclick="openModal('감정평가')"><div class="cbadge">🔍</div><div class="cico">🔍</div><div class="ctit">감정평가 금액이 뭐야?</div></button>
+</div>
+
+<div class="slabel">💰 세금 &amp; 비용</div>
+<div class="cgrid">
+  <button class="card g" onclick="openModal('취등록세')"><div class="cbadge">🏷️</div><div class="cico">📜</div><div class="ctit">취득세·등록세 — 주택 vs 오피스텔</div></button>
+  <button class="card g" onclick="openModal('리베이트')"><div class="cbadge">💎</div><div class="cico">💰</div><div class="ctit">분양 리베이트(R)란? 법적 지위는?</div></button>
+  <button class="card" onclick="openModal('실입금')"><div class="cbadge">🧮</div><div class="cico">🧮</div><div class="ctit">실입주금 계산 공식</div></button>
+  <button class="card g" onclick="openModal('보유세')"><div class="cbadge">🏛️</div><div class="cico">🏛️</div><div class="ctit">재산세 · 종부세 — 빌라는 얼마?</div></button>
+</div>
+
+<div class="slabel">📈 신용 &amp; 대출 전략</div>
+<div class="cgrid">
+  <button class="card r" onclick="openModal('저신용')"><div class="cbadge">🆘</div><div class="cico">🆘</div><div class="ctit">저신용자도 대출 받는 경우의 수</div></button>
+  <button class="card b" onclick="openModal('기대출')"><div class="cbadge">🔧</div><div class="cico">🔧</div><div class="ctit">기대출 많을 때 해결하는 법</div></button>
+  <button class="card p" onclick="openModal('사업자')"><div class="cbadge">🏢</div><div class="cico">🏢</div><div class="ctit">사업자 대출 · 회사채 활용법</div></button>
+  <button class="card c" onclick="openModal('스트레스')"><div class="cbadge">⚡</div><div class="cico">⚡</div><div class="ctit">2026 스트레스 DSR 규제 총정리</div></button>
+</div>
+
+<div class="slabel">📖 부동산 핵심 용어</div>
+<div class="cgrid">
+  <button class="card b" onclick="openModal('근저당')"><div class="cbadge">🔗</div><div class="cico">🔗</div><div class="ctit">근저당 — 집에 묶인 빚의 표시</div></button>
+  <button class="card" onclick="openModal('압류')"><div class="cbadge">🚫</div><div class="cico">🚫</div><div class="ctit">압류·가처분·예고등기 차이</div></button>
+  <button class="card c" onclick="openModal('선후순위')"><div class="cbadge">🥇</div><div class="cico">🥇</div><div class="ctit">선순위 vs 후순위 — 순서가 왜 중요한가</div></button>
+  <button class="card g" onclick="openModal('전입확정')"><div class="cbadge">📅</div><div class="cico">📅</div><div class="ctit">전입신고·확정일자 — 세입자 보호 무기</div></button>
+  <button class="card p" onclick="openModal('공시가')"><div class="cbadge">💹</div><div class="cico">💹</div><div class="ctit">공시가 vs 감정가 vs 시세 차이</div></button>
+  <button class="card d" onclick="openModal('소유권')"><div class="cbadge">🔑</div><div class="cico">🔑</div><div class="ctit">소유권 이전 등기 — 집이 진짜 내 것이 되는 순간</div></button>
+  <button class="card" onclick="openModal('대지지분')"><div class="cbadge">📐</div><div class="cico">📐</div><div class="ctit">대지지분·건폐율·용적률 쉽게 이해</div></button>
+  <button class="card b" onclick="openModal('채권최고')"><div class="cbadge">💰</div><div class="cico">💰</div><div class="ctit">채권최고액 — 은행이 을구에 적는 숫자</div></button>
+</div>
+
+<div class="slabel">🔑 현장 실무</div>
+<div class="cgrid">
+  <button class="card" onclick="openModal('체크리스트')"><div class="cbadge">✅</div><div class="cico">✅</div><div class="ctit">계약 전 꼭 확인할 체크리스트</div></button>
+  <button class="card b" onclick="openModal('전세사기')"><div class="cbadge">🚨</div><div class="cico">🚨</div><div class="ctit">전세사기 유형 &amp; 신축빌라 안전 기준</div></button>
+  <button class="card d" onclick="openModal('등기부')"><div class="cbadge">📄</div><div class="cico">📄</div><div class="ctit">등기부등본 읽는 법</div></button>
+  <button class="card" onclick="openModal('스크립트')"><div class="cbadge">📞</div><div class="cico">📞</div><div class="ctit">황과장 상담 스크립트 흐름</div></button>
+  <button class="card p" onclick="openModal('용어사전')"><div class="cbadge">📚</div><div class="cico">📚</div><div class="ctit">분양 현장 필수 용어 사전</div></button>
+  <button class="card r" onclick="openModal('광고금지')"><div class="cbadge">⚠️</div><div class="cico">⚠️</div><div class="ctit">광고 금지 · 분양가 노출 금지 이유</div></button>
+</div>
+
+</div>
+
+<div class="ov" id="ov" onclick="handleOvClick(event)">
+  <div class="modal" id="modal">
+    <div class="mhandle"></div>
+    <div class="mhead">
+      <div class="mheadico" id="mIco"></div>
+      <div class="mheadtit" id="mTit"></div>
+      <button class="mclose" onclick="closeModal()">✕</button>
+    </div>
+    <div class="mbody" id="mBody"></div>
+  </div>
+</div>
+<script>
+var C = {};
+
+C['매매절차'] = {ico:'📋', tit:'신축빌라 매매절차 A to Z', html: (function(){
+return '<div class="def">신축빌라 분양은 일반 아파트와 구조가 달라요. 아파트는 계약금 → 중도금(여러 번) → 잔금 순서인데, 신축빌라는 <strong>계약금 → 잔금</strong> 두 단계가 대부분이에요. 중간에 여러 번 돈이 나가지 않아서 자금 흐름 관리가 훨씬 쉽습니다. 이 절차를 처음부터 끝까지 이해하면 고객 상담 시 훨씬 자신 있게 설명할 수 있어요.</div>'
+
++'<p class="sect-lead"><strong>① 매물 탐색 단계</strong></p>'
++'<p>고객과 상담을 시작하면 가장 먼저 어떤 물건이 맞는지 파악해야 해요. 현장을 직접 방문하기 전에 속지(분양 안내지)를 통해 <strong>실입주금, 분양가, 구조(방 수·화장실 수), 주차 가능 여부, 취득세 지원 여부, R(리베이트) 금액</strong>을 먼저 확인해요. 이 정보를 미리 파악해야 고객에게 적합한 물건을 추천할 수 있어요. 지역은 서울, 경기, 인천 전반을 커버하되 고객의 직장 위치, 자녀 학군, 대중교통 접근성을 고려해서 좁혀가세요.</p>'
++'<p>현장 방문 시에는 단순히 집을 보는 게 아니라 <strong>주변 환경 전체를 체크</strong>해야 해요. 초·중·고 거리, 마트·병원·은행 접근성, 버스 정류장·지하철역 도보 거리, 주차장 구조(자주식인지 기계식인지), 층간소음 여부(바닥 두께·단독 vs 공동구조), 채광(남향인지), 창문 크기, 마감재 품질까지 꼼꼼히 봐야 합니다. 고객이 감정적으로 집에 끌리도록 만드는 건 현장에서의 경험이에요.</p>'
+
++'<p class="sect-lead"><strong>② 계약 체결 단계</strong></p>'
++'<p>물건이 결정되면 계약을 진행해요. <strong>계약금</strong>은 일반적으로 분양가의 10%인데, 신축빌라는 분양사마다 다르고 돌고래하우스 기준으로는 <strong>100만원 선</strong>으로 진행하는 경우가 많아요. 계약금이 낮다는 건 초기 부담이 적다는 의미이고, 이게 고객 입장에서 큰 장점이에요.</p>'
++'<p>계약서를 쓸 때는 반드시 <strong>등기부등본을 다시 확인</strong>해야 해요. 특히 을구(근저당·압류), 갑구(소유권·가처분)를 체크해서 이상한 게 없는지 확인하세요. 계약서에는 분양가, 계약금·잔금 납부 일정, 입주 예정일, 옵션 포함 내역이 명확하게 적혀야 해요. 취득세 지원, 옵션 무상 제공 같은 조건도 계약서나 별도 확인서에 명시해 두는 게 안전합니다.</p>'
+
++'<p class="sect-lead"><strong>③ 대출 진행 단계</strong></p>'
++'<p>계약이 끝나면 대출 진행이 시작돼요. 고객의 소득·신용·기대출 현황을 파악해서 어떤 대출 상품이 맞는지 설계해야 해요. 은행에 대출 심사를 신청하면 은행이 <strong>감정평가</strong>를 의뢰해요. 감정평가사가 현장을 방문해서 집의 가치를 평가하고, 그 금액을 기준으로 LTV(담보인정비율)를 적용해 대출 한도가 결정됩니다.</p>'
++'<p>대출이 실행되면 그 돈이 고객 통장으로 들어오는 게 아니라 <strong>잔금 납부 계좌로 직접 이체</strong>되는 구조예요. 고객이 직접 잔금을 내는 게 아니라 대출금이 분양사로 바로 가는 거라 훨씬 간편해요. 이 과정에서 법무사가 동시에 소유권 이전 등기를 진행합니다.</p>'
+
++'<p class="sect-lead"><strong>④ 잔금 납부 및 등기</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn">1</div><div class="st"><strong>잔금 전날</strong> — 등기부등본을 다시 발급해서 새로운 근저당·압류가 생기지 않았는지 최종 확인. 아주 중요합니다.</div></div>'
++'<div class="si"><div class="sn">2</div><div class="st"><strong>잔금일 당일</strong> — 대출 실행 → 잔금 이체 → 법무사가 소유권 이전 등기 신청을 동시에 진행.</div></div>'
++'<div class="si"><div class="sn">3</div><div class="st"><strong>등기 완료</strong> — 보통 2~3영업일 내에 고객 이름으로 등기부에 소유자가 변경돼요. 이 시점부터 진짜 고객 소유입니다.</div></div>'
++'<div class="si"><div class="sn">4</div><div class="st"><strong>전입신고</strong> — 입주 후 반드시 14일 이내에 전입신고를 해야 해요. 전입신고를 해야 주소 이전, 각종 행정 처리가 됩니다.</div></div>'
++'<div class="si"><div class="sn">5</div><div class="st"><strong>취득세 납부</strong> — 취득일로부터 60일 이내에 납부해야 해요. 분양사에서 지원해주는 경우엔 이 부분이 면제됩니다.</div></div>'
++'</div>'
++'<div class="tip"><strong>💡 돌고래하우스 차별점</strong><br>일반 분양과 달리 저신용·기대출·저소득 고객도 대출 구조를 설계해서 실입금을 최소화하는 게 핵심이에요. 계약부터 등기까지 전 과정을 함께 지원하는 게 돌고래하우스의 16년 노하우입니다.</div>'
+;})()};
+
+C['전액대출'] = {ico:'🏦', tit:'전액대출·무입주 — 사기야? 진짜야?', html: (function(){
+return '<div class="def">요즘 틱톡이나 유튜브에 "전액대출 무입주"라는 신축 분양 광고가 자주 보여요. 많은 사람들이 사기 아니냐고 의심하는데, 사기가 아니에요. 다만 <strong>모든 사람이 다 되는 건 아니고, 구조를 이해해야 내 상황에서 가능한지 판단할 수 있어요.</strong></div>'
+
++'<p class="sect-lead"><strong>핵심 구조 이해하기</strong></p>'
++'<p>전액대출의 핵심은 <strong>감정평가 금액</strong>에 있어요. 은행에서 주택담보대출을 줄 때 기준이 되는 건 분양가가 아니라 감정평가사가 평가한 감정가예요. 그 감정가에 LTV(담보인정비율)를 곱해서 대출 한도가 정해집니다.</p>'
++'<div class="fbox">감정평가 금액 × LTV(최대 80%) = 담보대출 한도<br><span style="font-size:13px;color:#aac0d8">감정가 &gt; 분양가이면 → 분양가 100% 이상 대출 가능</span></div>'
++'<p>생애 최초로 집을 사는 경우 LTV가 최대 80%까지 가능해요. 그럼 만약 분양가가 3억 2천만원인 집의 감정가가 4억으로 나왔다면? 4억 × 80% = 3억 2천만원. 딱 분양가만큼 나오죠. 이게 바로 <strong>전액대출</strong>이에요.</p>'
+
++'<div class="cgd"><div class="cb"><h4>✅ 전액대출 가능한 경우</h4><p>분양가 3억 2천<br>감정가 <span class="hc">4억</span><br>LTV 80% = 3억 2천<br><strong>실입금 0원</strong></p></div><div class="cb"><h4>❌ 전액대출 안 되는 경우</h4><p>분양가 3억 2천<br>감정가 <span class="hr">3억 5천</span><br>LTV 80% = 2억 8천<br><strong>실입금 4천만원 필요</strong></p></div></div>'
+
++'<p class="sect-lead"><strong>그럼 감정가만 높으면 누구나 다 되나요?</strong></p>'
++'<p>이게 핵심이에요. <strong>절대 아니에요.</strong> 감정가는 대출 한도의 <strong>천장(상한선)</strong>만 정해줄 뿐이에요. 그 천장 안에서 실제로 얼마나 대출을 받을 수 있는지는 <strong>신청자 개인의 소득, 기존 대출, 신용점수, DSR(총부채원리금상환비율)</strong>에 따라 결정됩니다.</p>'
++'<p>예를 들어 감정가가 4억으로 나와서 3억 2천 대출이 이론상 가능하더라도, 연소득이 2천만원이고 기존 차 할부가 있으면 DSR 계산에서 이미 한도를 넘어버려요. 그럼 3억 2천이 아니라 2억 5천밖에 안 나오는 거예요.</p>'
+
++'<p class="sect-lead"><strong>스트레스 DSR 때문에 더 어려워졌어요</strong></p>'
++'<p>2026년 현재 수도권·규제지역에는 <strong>스트레스 DSR +3.0%</strong>가 적용돼요. 이건 현재 금리에 3%를 더한 높은 금리로 원리금을 계산해서 대출 한도를 낮추는 규제예요. 예를 들어 실제 대출 금리가 4%라면 7%로 계산해서 한도를 산정하는 거예요. 이 때문에 예전에는 전액대출이 됐던 집도 지금은 개인 대출 한도가 부족해서 안 되는 경우가 많아졌어요.</p>'
+
++'<p class="sect-lead"><strong>5가지 핵심 정리</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn">1</div><div class="st">담보대출은 감정평가금액의 최대 <strong>80%</strong>까지 가능 (생애최초 기준)</div></div>'
++'<div class="si"><div class="sn">2</div><div class="st">감정가의 80%가 분양가보다 작으면 <strong>부족한 만큼 내 돈(실입금) 필요</strong></div></div>'
++'<div class="si"><div class="sn">3</div><div class="st">감정가가 아무리 높아도 개인 소득·기대출·DSR 때문에 <strong>한도가 부족할 수 있음</strong></div></div>'
++'<div class="si"><div class="sn">4</div><div class="st">기대출·저소득·저신용 악조건은 <strong>대환 + 신용대출 조합</strong>으로 해결 가능한 경우도 있음</div></div>'
++'<div class="si"><div class="sn rn">5</div><div class="st"><span class="hr">회생·파산·연체 진행 중</span>이면 서류 접수 자체 안 받음. 은행장 할아버지가 와도 안 됩니다.</div></div>'
++'</div>'
++'<div class="tip"><strong>💡 돌고래하우스의 역할</strong><br>고객의 소득·신용·기대출 상황을 파악해서 어떤 구조로 대출을 설계하면 실입금을 최소화할 수 있는지 분석해주는 게 핵심이에요. 단순히 집을 소개하는 게 아니라 <strong>금융 솔루션을 함께 설계</strong>하는 것입니다.</div>'
+;})()};
+
+C['담보신용'] = {ico:'⚖️', tit:'담보대출 vs 신용대출 차이', html: (function(){
+return '<div class="def">대출에는 크게 두 종류가 있어요. 집이나 땅 같은 재산을 담보로 맡기는 <strong>담보대출</strong>과, 담보 없이 내 신용만으로 받는 <strong>신용대출</strong>이에요. 신축빌라 분양에서는 이 두 가지를 어떻게 조합하느냐가 실입금을 얼마나 줄이느냐를 결정해요.</div>'
+
++'<div class="cgd"><div class="cb"><h4>🏠 담보대출이란?</h4><p>집·토지 등 부동산을 담보로 은행에 맡기고 돈을 빌리는 방식이에요. 못 갚으면 은행이 그 집을 경매로 팔아서 돈을 회수해요. 그래서 은행 입장에서 리스크가 낮고, 금리도 낮아요. 한도는 집값(감정가)에 LTV를 곱한 금액까지 나와요. 수억 원도 가능합니다.</p></div><div class="cb"><h4>💳 신용대출이란?</h4><p>담보 없이 순전히 내 신용점수, 소득, 직장 안정성만 보고 빌려주는 대출이에요. 은행 입장에서 리스크가 높으니 금리가 높고 한도도 적어요. 보통 연소득 이내로 한도가 제한됩니다. 이걸 담보대출과 함께 써서 실입금을 메꾸는 데 활용해요.</p></div></div>'
+
++'<table class="tbl"><thead><tr><th>구분</th><th>담보대출</th><th>신용대출</th></tr></thead><tbody>'
++'<tr><td>금리 수준</td><td class="hgr">연 3~5% (저금리)</td><td class="hr">연 4~20% (고금리)</td></tr>'
++'<tr><td>대출 한도</td><td class="hc">집값의 최대 80%</td><td>연소득 이내 (보통 5천~1억)</td></tr>'
++'<tr><td>심사 기준</td><td>집값(LTV) + 소득(DSR)</td><td>신용점수 + 소득</td></tr>'
++'<tr><td>상환 기간</td><td>최대 30~40년</td><td>최대 5~10년</td></tr>'
++'<tr><td>DSR 반영</td><td>원리금 전체 반영</td><td>원리금 전체 반영</td></tr>'
++'<tr><td>신축빌라 용도</td><td>메인 대출 (분양가의 대부분)</td><td>실입금 부족분 보충</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>신축빌라 실무에서 어떻게 조합하나요?</strong></p>'
++'<p>예를 들어 분양가가 3억인데 담보대출이 2억 5천 나왔다면, 부족한 5천만원을 신용대출로 채우는 거예요. 단, 신용대출은 금리가 높아서 월 납입금 부담이 올라가요. 그래서 실입금을 0으로 만들더라도 월 원리금 합계가 고객 소득 대비 감당 가능한 수준인지 반드시 계산해야 해요.</p>'
++'<p>신용대출 금리가 연 8%라면 5천만원 기준 월 이자만 약 33만원이에요. 여기에 담보대출 원리금이 월 80만원이라면 합계 113만원. 이게 고객 월소득의 40%를 넘으면 DSR 위반이 돼서 추가 대출이 막혀요. 항상 전체 그림을 보고 설계해야 합니다.</p>'
+
++'<p class="sect-lead"><strong>은행융자란?</strong></p>'
++'<div class="def"><strong>은행융자 = 담보대출</strong>이에요. 속지에 "은행융자 4억" 또는 "담보실입 4억"이라고 적혀있으면 이 집을 살 때 담보대출로 최대 4억이 나온다는 뜻입니다. 분양가에서 은행융자(담보대출)를 빼면 내가 직접 마련해야 하는 실입금이 됩니다.</div>'
++'<div class="tip"><strong>💡 핵심 공식</strong><br>실입금 = 분양가 − 은행융자(담보대출) − 신용대출 − 지원금(취득세·옵션 등)<br>이 숫자를 최대한 0에 가깝게 만드는 것이 목표입니다.</div>'
+;})()};
+
+C['LTV_DSR'] = {ico:'📐', tit:'LTV · DSR · DTI 쉽게 이해하기', html: (function(){
+return '<div class="def">대출을 받을 때 은행이 두 가지 기준으로 한도를 제한해요. 하나는 집값 대비 대출 비율인 <strong>LTV</strong>, 또 하나는 소득 대비 원리금 상환 비율인 <strong>DSR</strong>이에요. 둘 다 통과해야 대출이 나와요. 하나라도 초과하면 그 기준에 맞게 한도가 깎입니다.</div>'
+
++'<p class="sect-lead"><strong>LTV (Loan To Value) — 집값 대비 대출 비율</strong></p>'
++'<div class="fbox">LTV = 대출금액 ÷ 감정평가금액 × 100<br><span style="font-size:13px;color:#aac0d8">집값이 4억이고 LTV 70%라면 → 최대 2억 8천까지 대출 가능</span></div>'
++'<p>LTV는 지역과 주택 보유 수에 따라 달라요. 규제지역(서울 대부분, 경기 일부)에서는 더 엄격하게 적용되고, 비규제지역에서는 상대적으로 여유가 있어요.</p>'
++'<table class="tbl"><thead><tr><th>조건</th><th>규제지역 LTV</th><th>비규제지역 LTV</th></tr></thead><tbody>'
++'<tr><td>무주택 생애최초</td><td class="hgr">최대 80%</td><td class="hgr">최대 80%</td></tr>'
++'<tr><td>무주택 일반</td><td class="hc">60~70%</td><td class="hc">70%</td></tr>'
++'<tr><td>1주택자 (처분 조건부)</td><td class="hg">50%</td><td class="hg">60~70%</td></tr>'
++'<tr><td>다주택자</td><td class="hr">0~40%</td><td class="hg">60~70%</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>DSR (Debt Service Ratio) — 연소득 대비 원리금 상환 비율</strong></p>'
++'<div class="fbox">DSR = 연간 원리금 상환 총액 ÷ 연소득 × 100<br><span style="font-size:13px;color:#aac0d8">1금융권 은행: 40% 이내 / 보험사·상호금융: 50% 이내</span></div>'
++'<p>DSR은 내가 현재 가지고 있는 <strong>모든 대출의 원리금 합계</strong>를 연소득으로 나눈 비율이에요. 주담대뿐만 아니라 자동차 할부, 학자금 대출, 카드론까지 전부 포함돼요. 이 비율이 40%를 넘으면 1금융권에서는 추가 대출을 안 해줍니다.</p>'
++'<table class="tbl"><thead><tr><th>연소득</th><th>DSR 40% 기준 월 한도</th><th>연간 원리금 한도</th><th>대출 가능 금액 추정</th></tr></thead><tbody>'
++'<tr><td>2천만원</td><td class="hr">67만원</td><td>800만원</td><td>약 1억 (30년, 4%)</td></tr>'
++'<tr><td>3천만원</td><td class="hg">100만원</td><td>1,200만원</td><td>약 1억 5천</td></tr>'
++'<tr><td>5천만원</td><td class="hg">167만원</td><td>2,000만원</td><td>약 2억 5천</td></tr>'
++'<tr><td>7천만원</td><td class="hc">233만원</td><td>2,800만원</td><td>약 3억 5천</td></tr>'
++'<tr><td>1억원</td><td class="hc">333만원</td><td>4,000만원</td><td>약 5억</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>스트레스 DSR이란?</strong></p>'
++'<p>2026년부터 강화된 규제예요. 지금 금리가 4%이더라도, 미래에 금리가 오를 수 있다는 가정 하에 더 높은 금리(수도권 +3% = 7%)로 원리금을 계산해서 한도를 낮추는 방식이에요. 같은 소득이어도 수도권 집은 대출 한도가 비규제지역보다 훨씬 적게 나오는 이유입니다.</p>'
++'<div class="tip"><strong>💡 신축빌라 활용 포인트</strong><br>경기 파주·광주·안산 등 비규제지역 신축빌라는 스트레스 DSR +0.75%만 적용돼요. 같은 소득이라도 서울 아파트보다 훨씬 대출이 많이 나와서 실입금을 줄이기 쉽습니다.</div>'
+;})()};
+
+C['후순위'] = {ico:'🔗', tit:'후순위 대출·은행융자 뜻', html: (function(){
+return '<div class="def"><strong>후순위 대출</strong>이란 1금융권(담보대출) 다음 순위로 추가로 끼워넣는 대출이에요. 집을 담보로 이미 은행에서 1순위 근저당을 잡은 상태에서, 그 뒤에 또 다른 기관이 돈을 빌려주는 구조예요. 신축빌라 실무에서는 담보대출만으로 부족한 금액을 채울 때 자주 쓰입니다.</div>'
+
++'<p class="sect-lead"><strong>순위가 왜 중요한가</strong></p>'
++'<p>집이 경매로 넘어갔을 때, 팔린 돈을 나눠가지는 순서가 정해져 있어요. 먼저 등록한 순서대로 먼저 가져가요. 1순위가 다 가져가고 남으면 2순위가, 또 남으면 3순위가 받아요. 남는 게 없으면 후순위는 한 푼도 못 받는 거예요.</p>'
+
++'<table class="tbl"><thead><tr><th>순서</th><th>종류</th><th>금리</th><th>특징</th></tr></thead><tbody>'
++'<tr><td>🥇 1순위</td><td>주택담보대출 (1금융)</td><td class="hgr">연 3~5%</td><td>국민·신한·우리·하나·농협은행 등</td></tr>'
++'<tr><td>🥈 2순위</td><td>후순위 담보대출</td><td class="hg">연 8~15%</td><td>저축은행·캐피탈·보험사 등</td></tr>'
++'<tr><td>추가</td><td>신용대출</td><td class="hr">연 6~20%</td><td>담보 없이 추가로 빌리는 대출</td></tr>'
++'<tr><td>내 돈</td><td>실입주금</td><td>—</td><td>위 세 가지 제외 나머지</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>실무에서 어떻게 활용하나요?</strong></p>'
++'<p>예를 들어 분양가 3억 5천짜리 집이 있어요. 담보대출(1금융)로 2억 5천이 나왔어요. 부족한 1억은 어떻게 채울까요? 이때 저축은행·캐피탈에서 후순위 대출로 6천, 신용대출로 4천을 더 받으면 실입금을 0으로 만들 수 있어요. 속지에서 "담실+신용 2천 가능", "실입 5천~8천" 이런 표현들이 이 구조를 설명하는 거예요.</p>'
++'<p>후순위 대출을 쓰면 실입금은 줄어들지만, <strong>월 납입금이 올라가는 문제</strong>가 있어요. 후순위 대출 금리가 높기 때문에 이자 부담이 크거든요. 그래서 고객의 월소득 대비 전체 원리금이 얼마나 되는지 반드시 계산하고, 감당 가능한 수준인지 확인해야 합니다.</p>'
+
++'<p class="sect-lead"><strong>은행융자, 담보실입 — 용어 정리</strong></p>'
++'<div class="irow"><span class="lb">은행융자</span><span class="vl">담보대출과 같은 말이에요. 속지에 "은행융자 2억 5천"이라고 적혀있으면 이 집의 담보대출 한도가 2억 5천이라는 뜻.</span></div>'
++'<div class="irow"><span class="lb">담보실입</span><span class="vl">담보대출 후 고객이 직접 내야 하는 금액. 분양가 − 담보대출 = 담보실입.</span></div>'
++'<div class="irow"><span class="lb">생초</span><span class="vl">생애최초의 줄임말. 생애 처음으로 집을 사는 경우 LTV 80% 적용 가능.</span></div>'
++'<div class="tip"><strong>💡 속지 읽는 법</strong><br>"담보실입 5천 / R20"이라고 적혀있으면 → 이 집 사는 데 내 돈 5천만원이 필요하고, 계약 성사 시 컨설턴트에게 2천만원 수수료가 나온다는 뜻이에요.</div>'
++'<div class="wrn"><strong>⚠️ 주의</strong><br>후순위·신용대출을 무리하게 끌어쓰면 월 납입금 부담이 커요. 고객 소득 대비 전체 원리금이 월소득의 40~50%를 넘지 않도록 설계하는 게 중요합니다.</div>'
+;})()};
+
+C['감정평가'] = {ico:'🔍', tit:'감정평가 금액이 뭐야?', html: (function(){
+return '<div class="def"><strong>감정평가</strong>란 공인된 감정평가사가 해당 부동산의 시장 가치를 객관적으로 평가한 금액이에요. 이 금액이 대출의 핵심 기준이 돼요. 은행은 분양가나 실거래가가 아니라 반드시 이 <strong>감정평가 금액(감정가)</strong>을 기준으로 대출 한도를 계산합니다.</div>'
+
++'<p class="sect-lead"><strong>감정가가 왜 분양가와 다른가요?</strong></p>'
++'<p>분양가는 분양사(건설사·시행사)가 정한 가격이에요. 반면 감정가는 제3자인 전문 감정평가사가 주변 시세, 건물 상태, 입지, 마감재 품질, 대지지분 등을 종합해서 독립적으로 평가한 금액이에요. 신축빌라는 마감재가 좋고, 옵션이 풍부하고, 준공 시점에 평가받기 때문에 <strong>감정가가 분양가보다 높게 나오는 경우가 많아요.</strong> 이것이 전액대출의 핵심 원리입니다.</p>'
+
++'<div class="cgd"><div class="cb"><h4>📈 감정가 &gt; 분양가인 경우</h4><p>감정가 4억에 LTV 80% = 3억 2천<br>분양가 3억 2천<br>→ <strong>실입금 0원 가능 (전액대출)</strong><br>신축빌라에서 자주 발생하는 구조.</p></div><div class="cb"><h4>📉 감정가 &lt; 분양가인 경우</h4><p>감정가 3억에 LTV 80% = 2억 4천<br>분양가 3억 2천<br>→ <strong>실입금 8천만원 발생</strong><br>분양가가 시세보다 비싸게 책정된 경우.</p></div></div>'
+
++'<p class="sect-lead"><strong>감정평가는 어떤 과정으로 이루어지나요?</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn">1</div><div class="st">고객이 대출 신청을 하면 → 은행이 한국부동산원 또는 민간 감정평가사에게 감정 의뢰를 해요.</div></div>'
++'<div class="si"><div class="sn">2</div><div class="st">감정평가사가 직접 현장을 방문해서 건물 상태, 마감, 주변 시세, 교통·학군 등을 종합적으로 평가해요.</div></div>'
++'<div class="si"><div class="sn">3</div><div class="st">평가 결과(감정가)가 은행에 전달되고, 은행은 이 감정가에 LTV를 곱해서 대출 한도를 산정합니다.</div></div>'
++'<div class="si"><div class="sn">4</div><div class="st">감정가는 보통 계약 후 대출 진행 시 나오기 때문에, 계약 전에는 예상치로만 알 수 있어요.</div></div>'
++'</div>'
+
++'<p class="sect-lead"><strong>감정가를 높이는 요소들</strong></p>'
++'<p>감정가에 영향을 주는 요소들을 알면 어떤 물건이 전액대출에 유리한지 판단할 수 있어요.</p>'
++'<div class="irow"><span class="lb">마감재 품질</span><span class="vl">시스템에어컨, 빌트인 냉장고, 식기세척기, 드레스룸 등 풀옵션일수록 감정가가 올라가요.</span></div>'
++'<div class="irow"><span class="lb">대지지분</span><span class="vl">세대당 땅 지분이 클수록 토지 가치가 높아서 감정가가 유리해요.</span></div>'
++'<div class="irow"><span class="lb">입지·교통</span><span class="vl">역세권, 학세권일수록 감정가가 높게 나와요.</span></div>'
++'<div class="irow"><span class="lb">준공 시점</span><span class="vl">신축일수록 감가상각이 없어서 감정가가 높아요.</span></div>'
++'<div class="irow"><span class="lb">채광·향</span><span class="vl">남향, 채광 좋은 집이 감정가가 더 높게 나오는 경향이 있어요.</span></div>'
++'<div class="tip"><strong>💡 실무 팁</strong><br>고 R 물건 중에 마감이 좋고 대지지분이 넉넉한 물건을 선별하면 전액대출 가능성이 높아요. 속지에서 "감정가 올려서 대출 더 나오게"라는 말은 이런 구조를 의미합니다.</div>'
+;})()};
+
+C['취등록세'] = {ico:'📜', tit:'취득세·등록세 — 주택 vs 오피스텔 차이', html: (function(){
+return '<div class="def"><strong>취득세</strong>는 부동산을 살 때 국가에 내는 세금이에요. 집값의 일정 비율을 취득일로부터 60일 이내에 납부해야 합니다. 주택이냐 오피스텔이냐, 생애 최초냐 아니냐, 규제지역이냐 아니냐에 따라 세율이 크게 달라지기 때문에 반드시 알아야 해요. 속지에 "취득세 지원"이라고 적혀있는 건 분양사가 이 세금을 대신 내줬다는 뜻입니다.</div>'
+
++'<p class="sect-lead"><strong>주택 취득세율 (2026 기준)</strong></p>'
++'<table class="tbl"><thead><tr><th>구분</th><th>주택 가격</th><th>취득세율</th><th>비고</th></tr></thead><tbody>'
++'<tr><td>1주택</td><td>6억 이하</td><td class="hgr">1%</td><td>생애최초 감면 가능</td></tr>'
++'<tr><td>1주택</td><td>6억~9억</td><td class="hg">1.01~2.99%</td><td>구간별 차등 적용</td></tr>'
++'<tr><td>1주택</td><td>9억 초과</td><td class="hg">3%</td><td>—</td></tr>'
++'<tr><td>2주택</td><td>조정대상지역</td><td class="hr">8%</td><td>중과세!</td></tr>'
++'<tr><td>2주택</td><td>비조정지역</td><td class="hg">1~3%</td><td>일반세율 적용</td></tr>'
++'<tr><td>3주택 이상</td><td>조정대상지역</td><td class="hr">12%</td><td>중과세!</td></tr>'
++'<tr><td>3주택 이상</td><td>비조정지역</td><td class="hr">8%</td><td>중과세!</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>오피스텔 취득세율</strong></p>'
++'<p>오피스텔은 기본적으로 <strong>주택이 아닌 업무용 건물</strong>로 분류돼요. 그래서 주택 수에 포함되지 않는 게 원칙이고, 취득세도 다르게 적용돼요.</p>'
++'<table class="tbl"><thead><tr><th>구분</th><th>세율</th><th>주택 수 포함 여부</th><th>특이사항</th></tr></thead><tbody>'
++'<tr><td>업무용 오피스텔</td><td class="hr">4.6%</td><td class="hgr">미포함</td><td>주택 중과세 피할 수 있음</td></tr>'
++'<tr><td>주거용 오피스텔 (실거주)</td><td class="hg">4.6% → 감면</td><td class="hr">포함될 수 있음</td><td>주거용으로 사용 시 주택으로 간주 가능</td></tr>'
++'</tbody></table>'
++'<p>오피스텔은 주택 수에 포함되지 않아서 1주택자가 오피스텔을 추가로 사도 2주택 중과세가 안 붙는 경우가 많아요. 이 때문에 투자 목적으로 오피스텔을 사는 분들이 있어요. 단, 실제로 주거용으로 쓰면 과세 당국이 주택으로 판단할 수 있으니 주의해야 합니다.</p>'
+
++'<p class="sect-lead"><strong>생애최초 취득세 감면</strong></p>'
++'<div class="def">태어나서 처음으로 주택을 구입하는 경우 취득세를 <strong>최대 200만원까지 감면</strong>받을 수 있어요. 12억 이하 주택에 적용되며, 취득일로부터 3개월 이내에 주민센터나 시군구청에 신청해야 합니다. 생애 처음이라는 증명을 위해 과거 주택 보유 이력이 없어야 해요.</div>'
+
++'<p class="sect-lead"><strong>취득세 계산 예시</strong></p>'
++'<p>분양가 3억짜리 주택을 생애 처음으로 사는 경우 → 취득세 1% = 300만원. 여기서 감면 200만원 적용하면 실제 납부액은 100만원이에요. 분양사가 "취득세 지원"을 해준다면 이 100~300만원을 대신 내줬다는 뜻이에요.</p>'
++'<div class="tip"><strong>💡 속지에서 확인할 것</strong><br>"취득세 O / 취득세 금액 280만원"이라고 적혀있으면 분양사가 취득세 280만원을 대신 내준다는 조건이에요. 이게 실질적인 실입금 절감 효과가 있습니다.</div>'
+;})()};
+
+C['리베이트'] = {ico:'💰', tit:'분양 리베이트(R)란? 법적 지위는?', html: (function(){
+return '<div class="def"><strong>R(리베이트)</strong>란 신축빌라 분양 시 분양사(건설사·시행사)가 계약을 성사시켜 준 중개인·컨설턴트에게 지급하는 <strong>성공 수수료(인센티브)</strong>예요. 속지 상단에 "R20"이라고 적혀있으면 계약 성사 시 2,000만원을 수수료로 지급한다는 뜻입니다. 이것이 돌고래하우스의 주요 수익 구조이기도 해요.</div>'
+
++'<p class="sect-lead"><strong>R 금액 읽는 법</strong></p>'
++'<table class="tbl"><thead><tr><th>속지 표기</th><th>실제 금액</th><th>계산 방법</th><th>언제 받나</th></tr></thead><tbody>'
++'<tr><td>R8</td><td class="hg">800만원</td><td>8 × 100만원</td><td>계약 완료 후</td></tr>'
++'<tr><td>R10</td><td class="hg">1,000만원</td><td>10 × 100만원</td><td>계약 완료 후</td></tr>'
++'<tr><td>R15</td><td class="hg">1,500만원</td><td>15 × 100만원</td><td>계약 완료 후</td></tr>'
++'<tr><td>R20</td><td class="hc">2,000만원</td><td>20 × 100만원</td><td>계약 완료 후</td></tr>'
++'<tr><td>R30</td><td class="hc">3,000만원</td><td>30 × 100만원</td><td>계약 완료 후</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>법적 지위는 어떻게 되나요?</strong></p>'
++'<p>분양사가 컨설턴트에게 계약 성사에 대한 인센티브를 지급하는 것 자체는 <strong>불법이 아니에요.</strong> 다만 받은 R은 소득이기 때문에 부가세 신고(사업자)나 기타소득 신고(비사업자)를 해야 해요. 세금 신고를 안 하면 나중에 세무조사를 받을 수 있어요. 돌고래하우스는 사업자 기반으로 운영하기 때문에 세금 신고 체계를 갖추는 게 중요합니다.</p>'
+
++'<div class="cgd"><div class="cb"><h4>✅ 합법적인 범위</h4><p>분양사가 컨설턴트에게 지급하는 성공 수수료 자체는 합법. 부가세 신고 후 수령하면 문제없음.</p></div><div class="cb"><h4>⚠️ 주의해야 할 것</h4><p>R을 고객에게 숨기고 분양가를 부풀린다면 문제. R을 미신고하면 세금 추징 위험. 세금 신고 반드시 해야 함.</p></div></div>'
+
++'<p class="sect-lead"><strong>R이 높으면 뭘 의미하나요?</strong></p>'
++'<p>일반적으로 R이 높을수록 분양사가 물건을 팔기 어렵다는 신호예요. 재고가 많이 남았거나, 가격이 비싸거나, 입지가 다소 아쉬운 경우에 R을 높여서 컨설턴트들을 유인해요. 반대로 R이 낮아도 감정가가 좋고 실입금이 적으면 쉽게 팔리는 물건이에요.</p>'
++'<p>R이 높은 물건은 분양가 협상 여지도 있고, 취득세 지원·옵션 무상 제공 같은 혜택을 더 받을 수 있는 경우도 많아요. 무조건 R이 높은 물건이 나쁜 게 아니에요. 고객 상황에 맞게 잘 활용하면 돼요.</p>'
+
++'<p class="sect-lead"><strong>더블인정 X 란?</strong></p>'
++'<div class="def">같은 고객에 대해 두 명의 컨설턴트가 동시에 R을 청구할 수 없다는 뜻이에요. 어떤 컨설턴트가 먼저 고객을 데려왔냐가 기준이 되는데, 이를 두고 분쟁이 생기는 경우가 있어요. 분양사마다 기준이 달라서 사전에 확인이 필요합니다.</div>'
++'<div class="tip"><strong>💡 속지에서 확인할 것</strong><br>"당일 계약자만 인정" "선입금 계약자만 인정" 등의 조건이 붙어있으면, 계약 후 R을 받으려면 그 조건을 충족해야 해요. 계약 전에 분양사와 명확히 확인하세요.</div>'
+;})()};
+
+C['실입금'] = {ico:'🧮', tit:'실입주금 계산 공식', html: (function(){
+return '<div class="def"><strong>실입주금(실입금)</strong>이란 집을 살 때 대출·지원금을 제외하고 고객이 <strong>직접 현금으로 마련해야 하는 금액</strong>이에요. 이 숫자를 0에 가깝게 만드는 것이 돌고래하우스의 핵심 서비스입니다.</div>'
+
++'<div class="fbox">실입주금 = 분양가 − 담보대출 − 신용대출(후순위) − 지원금</div>'
+
++'<p class="sect-lead"><strong>상세 예시 계산 (분양가 3억)</strong></p>'
++'<table class="tbl"><thead><tr><th>항목</th><th>금액</th><th>설명</th></tr></thead><tbody>'
++'<tr><td>분양가</td><td class="hr">3억 원</td><td>고객이 내야 할 총 금액</td></tr>'
++'<tr><td>담보대출 (LTV 70%)</td><td class="hgr">−2억 1천만원</td><td>감정가 3억 기준, 은행에서 나오는 금액</td></tr>'
++'<tr><td>취득세 지원</td><td class="hgr">−250만원</td><td>분양사에서 취득세 대신 납부</td></tr>'
++'<tr><td>신용대출 보충</td><td class="hgr">−5,750만원</td><td>개인 신용대출로 실입금 메꾸기</td></tr>'
++'<tr><td><strong>최종 실입주금</strong></td><td class="hc"><strong>≈ 0원</strong></td><td>전액 대출·지원금으로 충당</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>감정가를 올리면 어떻게 달라지나요?</strong></p>'
++'<table class="tbl"><thead><tr><th>감정가</th><th>LTV 80%</th><th>분양가 3억 기준 실입금</th></tr></thead><tbody>'
++'<tr><td class="hr">3억원</td><td>2억 4천</td><td class="hr">6천만원 (실입금 발생)</td></tr>'
++'<tr><td class="hg">3억 5천</td><td>2억 8천</td><td class="hg">2천만원 (실입금 발생)</td></tr>'
++'<tr><td class="hc">3억 7천 5백</td><td>3억</td><td class="hc">0원 (전액대출)</td></tr>'
++'<tr><td class="hgr">4억</td><td>3억 2천</td><td class="hgr">0원 + 여유 2천</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>특례보금자리론·정책대출 활용</strong></p>'
++'<div class="def">신혼부부·생애최초 조건을 충족하면 특례보금자리론을 쓸 수 있어요. LTV 80%에 금리 연 3.25~4.15%로 일반 시중은행보다 금리가 낮아요. 연소득 7천만원 이하, 9억 이하 주택이 대상이에요. 이 상품을 활용하면 같은 소득에서도 대출 한도가 늘어나 실입금을 더 줄일 수 있어요.</div>'
+
++'<p class="sect-lead"><strong>법무사 비용·등기비용도 포함해서 계산하세요</strong></p>'
++'<p>실입금 계산 시 취득세 외에도 법무사 비용(30~80만원), 등기 비용, 인지세 등 부대 비용이 추가로 발생해요. 분양사에서 이 비용도 지원해 주는 경우가 있으니 속지의 지원 조건을 꼼꼼히 확인하세요.</p>'
++'<div class="tip"><strong>💡 상담 시 체크포인트</strong><br>고객과 상담 시 ① 연소득, ② 현재 대출 내역, ③ 신용점수, ④ 주택 보유 여부, ⑤ 생애최초 여부를 파악해야 정확한 실입금을 계산할 수 있어요.</div>'
+;})()};
+
+C['보유세'] = {ico:'🏛️', tit:'재산세·종부세 — 빌라는 얼마?', html: (function(){
+return '<div class="def">집을 살 때 한 번만 내는 취득세와 달리, <strong>재산세는 매년</strong> 내야 하는 세금이에요. 집을 보유하고 있는 동안 계속 나가는 비용이기 때문에 고객에게 미리 안내해 주는 게 좋아요. 신축빌라는 시세 대비 공시가격이 낮아서 재산세 부담이 아파트보다 훨씬 적다는 게 장점입니다.</div>'
+
++'<p class="sect-lead"><strong>재산세란?</strong></p>'
++'<p>매년 6월 1일 기준 집을 소유하고 있는 사람에게 부과되는 세금이에요. 7월과 9월에 두 번에 나눠서 내요(각 50%). 과세 기준은 <strong>공시가격 × 공정시장가액비율(현재 60%)= 과세표준</strong>이고, 이 과세표준에 세율을 곱해서 세금이 결정됩니다.</p>'
++'<table class="tbl"><thead><tr><th>과세표준</th><th>세율</th></tr></thead><tbody>'
++'<tr><td>6천만원 이하</td><td class="hgr">0.1%</td></tr>'
++'<tr><td>6천만~1억 5천</td><td class="hg">0.15%</td></tr>'
++'<tr><td>1억 5천~3억</td><td class="hg">0.25%</td></tr>'
++'<tr><td>3억 초과</td><td class="hr">0.4%</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>신축빌라 재산세 실제 계산</strong></p>'
++'<p>시세 3억짜리 신축빌라의 공시가격은 보통 시세의 60~70% 수준인 1억 8천~2억 1천 정도예요. 이 공시가에 공정시장가액비율 60%를 곱하면 과세표준이 나오고, 여기에 세율을 적용해요.</p>'
++'<div class="def">예시: 공시가 2억 × 60% = 과세표준 1억 2천<br>1억 2천 중 6천까지는 0.1% = 6만원<br>나머지 6천에는 0.15% = 9만원<br>합계 재산세 약 15만원 / 년<br>도시지역분(재산세의 20%) 추가하면 약 <strong>18만원 / 년</strong></div>'
++'<div class="tip"><strong>💡 고객에게 이렇게 설명해요</strong><br>"3억짜리 신축빌라 사시면 재산세가 1년에 20만원도 안 나와요. 한 달에 만몇천 원 수준이에요. 커피값도 안 되죠." 이렇게 말해주면 고객이 보유 비용 부담을 덜 느껴요.</div>'
+
++'<p class="sect-lead"><strong>종합부동산세(종부세)란?</strong></p>'
++'<p>공시가격 합산이 일정 기준을 넘는 고가 자산가에게 추가로 부과하는 세금이에요. 1주택자는 공시가 12억 초과, 다주택자는 공시가 합산 9억 초과 시 부과됩니다.</p>'
++'<p>시세 3억짜리 신축빌라는 공시가가 2억 수준이라 종부세 대상이 전혀 아니에요. 신축빌라를 여러 채 사더라도 종부세를 내는 경우는 극히 드물어요. 이것도 신축빌라의 장점 중 하나입니다.</p>'
++'<div class="wrn"><strong>⚠️ 주의</strong><br>공시가격은 매년 4월에 국토교통부가 발표해요. 주변 개발 호재 등으로 공시가격이 오르면 재산세도 올라갈 수 있어요.</div>'
+;})()};
+
+C['저신용'] = {ico:'🆘', tit:'저신용자도 대출 받는 경우의 수', html: (function(){
+return '<div class="def">신용점수가 낮다고 해서 무조건 대출을 못 받는 건 아니에요. 방법에 따라 충분히 가능한 경우가 많습니다. 단, 상황에 따라 접근 방법이 달라지기 때문에 고객의 상황을 먼저 정확하게 파악하는 게 중요해요.</div>'
+
++'<p class="sect-lead"><strong>경우 1 — 담보(집)가 있으면 신용 낮아도 가능</strong></p>'
++'<p>은행은 신용대출을 줄 때는 신용점수를 굉장히 중요하게 봐요. 하지만 <strong>담보대출은 다릅니다.</strong> 담보대출의 핵심은 집이에요. 집이라는 담보가 있으면 은행이 못 갚아도 집을 팔아서 회수할 수 있으니까 신용점수가 낮아도 대출이 가능한 거예요.</p>'
++'<p>KCB 기준 700점 이상이면 1금융권(시중은행) 담보대출 심사가 가능해요. 700점 미만이면 1금융권은 어렵고 2금융권(저축은행·캐피탈)에서 담보대출을 받아야 해요. 금리가 높아지지만 불가능한 건 아닙니다.</p>'
+
++'<p class="sect-lead"><strong>경우 2 — 정부지원 서민금융 상품 활용</strong></p>'
++'<div class="irow"><span class="lb">햇살론15</span><span class="vl">연소득 3,500만원 이하 또는 신용점수 하위 20% 해당자 대상. 금리 연 15.9% 이내. 한도 2,000만원.</span></div>'
++'<div class="irow"><span class="lb">새희망홀씨</span><span class="vl">저소득·저신용자 대상으로 은행권에서 운영. 금리 연 10.5% 이내. 한도 3,000만원.</span></div>'
++'<div class="irow"><span class="lb">소액생계비대출</span><span class="vl">긴급 생계비 필요 시 최대 100만원. 저신용자도 가능.</span></div>'
++'<div class="irow"><span class="lb">근로자햇살론</span><span class="vl">재직 중인 근로자 대상. 신용점수 하위 20% 이하. 최대 3,000만원.</span></div>'
+
++'<p class="sect-lead"><strong>경우 3 — 4대보험 재직으로 신용 올리기</strong></p>'
++'<p>직장에 취업해서 4대보험(국민연금·건강보험·고용보험·산재보험)에 가입되는 순간부터 신용이 올라가기 시작해요. 국민연금·건강보험 납부 내역이 소득 증빙이 되고, 안정적인 소득원이 있다는 신호를 금융기관에 줍니다.</p>'
++'<table class="tbl"><thead><tr><th>재직 기간</th><th>가능한 것</th><th>신용에 미치는 영향</th></tr></thead><tbody>'
++'<tr><td>1개월~</td><td>일부 캐피탈 소액대출</td><td>직장 인정 시작</td></tr>'
++'<tr><td>3개월~</td><td class="hg">저축은행·2금융권 대출 / 개인회생자 대출</td><td class="hg">안정적 소득 확인 가능</td></tr>'
++'<tr><td>6개월~</td><td class="hg">통신비·건강보험 납부내역 신용평가사 제출</td><td class="hgr">30~50점 상승 효과</td></tr>'
++'<tr><td>12개월~</td><td class="hc">1금융권 신용대출 심사 가능</td><td class="hc">안정성 인정</td></tr>'
++'<tr><td>24개월~</td><td class="hc">사업자 1금융권 대출 가능</td><td class="hc">장기 소득 신뢰</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>경우 4 — 신용점수 빠르게 올리는 실전 방법</strong></p>'
++'<div class="irow"><span class="lb">비금융 제출</span><span class="vl">토스·카카오페이에서 통신비·건강보험 납부 내역을 신용평가사(NICE·KCB)에 제출하면 즉시 30~50점 상승. 무료로 당일 가능.</span></div>'
++'<div class="irow"><span class="lb">카드 한도 증액</span><span class="vl">신용카드 한도를 높이고 사용액을 한도의 30% 이내로 유지하면 KCB 점수가 올라가요.</span></div>'
++'<div class="irow"><span class="lb">고금리 대출 상환</span><span class="vl">2금융권·대부업 대출을 1금융권으로 갈아타거나 상환하면 신용점수 상승.</span></div>'
++'<div class="irow"><span class="lb">연체 즉시 해소</span><span class="vl">연체 중인 금액이 있다면 즉시 갚는 게 최우선. 연체 기록이 사라지는 데 시간이 걸리지만 상환 자체가 점수 회복의 시작.</span></div>'
+
++'<div class="wrn"><strong>❌ 절대 안 되는 경우</strong><br>회생·파산·연체가 현재 <strong>진행 중</strong>인 경우는 어떤 정상 금융기관도 서류 접수 자체를 받지 않아요. 면책이 완료되고 공공정보가 삭제된 이후에야 대출이 가능합니다.</div>'
+
++'<button class="subbtn" id="subBtn" onclick="toggleSub(this)"><span>📌 조심해야 할 것 — 현장에서 들을 수 있는 방법들 (클릭해서 열기)</span><span class="arr">▼</span></button>'
++'<div class="subinner" id="subInner">'
++'<p style="color:#f0c060;font-weight:700;margin-bottom:14px;">📌 실제 시장에 존재하는 방법들이에요. 어떤 방법인지 알고 있어야 고객과 대화할 때 올바르게 대처할 수 있습니다.</p>'
++'<p><strong style="color:#f0c060">① 작업 대출 — 재직·소득 서류 조작</strong></p>'
++'<p style="margin-top:8px;">직장이 없거나 소득이 적은 사람이 대출을 받기 위해 지인 회사 명의로 가짜 재직증명서와 급여명세서를 만들거나, 통장에 수개월간 급여 명목으로 돈을 입금해서 실제 직장인인 척 은행을 속이는 방법이에요. 공문서를 살짝 수정해서 제출하는 경우도 있고, "내가 다 알아서 해줄게"라고 유혹하는 브로커를 통해 진행되는 경우가 많습니다. 얼핏 통할 것 같아 보이지만 이 방법으로 집을 샀다가 나중에 모든 것이 한꺼번에 무너지는 경우를 현장에서 실제로 보게 됩니다.</p>'
++'<p style="margin-top:14px;"><strong style="color:#f0c060">② 업계약 — 집값 부풀리기</strong></p>'
++'<p style="margin-top:8px;">실제로는 2억원에 거래되는 집인데, 계약서에 2억 5천만원으로 높여 적어서 은행에 제출하는 방법이에요. LTV 70%를 적용하면 원래 1억 4천만원만 나와야 할 대출이 1억 7천 5백만원까지 나오게 되고, 차액을 브로커가 가전제품이나 취득세 명목으로 돌려주는 구조입니다. 일명 풀대출이라고도 불러요. 겉으로는 고객에게 유리해 보이지만, 계약서에 서명한 고객도 공범이 되기 때문에 나중에 문제가 생기면 고객도 피해를 고스란히 입게 됩니다. 우리가 이런 구조를 권유하거나 도와주는 순간, 돌고래하우스도 함께 위험해집니다.</p>'
++'</div>'
+;})()};
+
+C['기대출'] = {ico:'🔧', tit:'기대출 많을 때 해결하는 법', html: (function(){
+return '<div class="def">기존 대출이 많으면 DSR(총부채원리금상환비율)이 높아져서 새로운 대출 한도가 줄어들거나 아예 막혀버려요. 이럴 때 단순히 "대출이 너무 많아서 안 됩니다"로 끝내면 안 돼요. 구조를 바꿔서 해결할 수 있는 방법들이 있습니다.</div>'
+
++'<p class="sect-lead"><strong>방법 1 — 고금리 대출을 저금리로 대환하기</strong></p>'
++'<p>대환대출이란 기존 고금리 대출을 새로운 저금리 대출로 갈아타는 것이에요. 연 15% 캐피탈 대출 3천만원을 연 6% 1금융 신용대출로 갈아타면, 월 이자가 37만원에서 15만원으로 줄어들어요. 월 22만원 절감. 이렇게 원리금이 줄면 DSR도 낮아져서 새로운 대출 한도가 생겨요.</p>'
++'<p>2024년부터 금융당국이 운영하는 <strong>대환대출 인프라(플랫폼)</strong>를 통해 온라인에서 간편하게 대환이 가능해요. 카카오뱅크·네이버페이파이낸셜 등에서 여러 금융사의 금리를 비교하고 갈아탈 수 있습니다.</p>'
+
++'<p class="sect-lead"><strong>방법 2 — 여러 대출을 하나로 통합하기</strong></p>'
++'<p>신용평가사는 대출의 총액보다 <strong>건수(몇 개의 대출이 있는지)</strong>를 굉장히 중요하게 봐요. 대출이 5건 있으면 5개의 리스크로 보거든요. 이 5건을 하나로 합치면 신용점수도 오르고 DSR 계산도 더 유리해져요. 예를 들어 차 할부 1건 + 신용대출 2건 + 카드론 2건 = 5건을 1건의 1금융 신용대출로 통합하는 거예요.</p>'
+
++'<p class="sect-lead"><strong>방법 3 — 소득을 더 높게 인정받는 방법</strong></p>'
++'<div class="irow"><span class="lb">카드 추정소득</span><span class="vl">소득 증빙이 어려운 경우, 신용카드 사용액을 소득으로 인정해주는 보험사 상품이 있어요. 월 200만원 카드 사용 = 연 4천만원 소득으로 인정. 이렇게 되면 DSR 계산에서 분모(소득)가 커져서 한도가 늘어납니다.</span></div>'
++'<div class="irow"><span class="lb">사업자 소득 신고</span><span class="vl">사업자등록 후 국세청에 소득을 신고하면 그 소득이 대출 심사에 반영돼요. 사업 실적이 쌓이면 소득이 높아져 DSR 한도가 늘어납니다.</span></div>'
++'<div class="irow"><span class="lb">배우자 합산</span><span class="vl">부부 공동명의로 대출을 신청하면 배우자 소득까지 합산돼요. 예를 들어 본인 소득 3천 + 배우자 소득 3천 = 합산 6천으로 DSR을 계산하면 한도가 두 배 가까이 늘어납니다.</span></div>'
++'<div class="irow"><span class="lb">보험사 활용</span><span class="vl">보험사는 DSR 50%까지 허용해요. 은행(40%)보다 10%포인트 더 여유가 있어서 같은 소득이라도 더 많이 빌릴 수 있어요.</span></div>'
+
++'<p class="sect-lead"><strong>방법 4 — 대출 순서 바꾸기</strong></p>'
++'<p>대출을 받는 순서가 굉장히 중요해요. 주택담보대출을 먼저 받고, 그 다음에 차 할부나 신용대출을 받아야 해요. 자동차 할부가 이미 있는 상태에서 주담대를 신청하면 DSR에 차 할부 원리금이 이미 포함되어 있어서 주담대 한도가 확 줄어들어요. 집 먼저, 차는 나중에가 원칙입니다.</p>'
++'<div class="tip"><strong>💡 상담 시 활용법</strong><br>"지금 기대출이 많아서 어렵다고 하셨죠? 한 번 전부 정리해서 어디서 어떻게 갈아타면 되는지 같이 보면 길이 보이는 경우가 많아요. 전문 대출 컨설턴트랑 연결해 드릴게요."</div>'
+;})()};
+
+C['사업자'] = {ico:'🏢', tit:'사업자 대출·회사채 활용법', html: (function(){
+return '<div class="def">사업자 대출과 법인(회사채) 대출은 개인 신용이 낮거나 DSR이 꽉 찬 상황에서 활용할 수 있는 추가 대출 방법이에요. 개인 대출과 다른 계정으로 관리되어 개인 DSR에 직접 반영되지 않는 경우가 있어서 실입금 해결에 쓸 수 있어요.</div>'
+
++'<p class="sect-lead"><strong>개인사업자 대출 — 사업 기간에 따른 가능 여부</strong></p>'
++'<table class="tbl"><thead><tr><th>사업 기간</th><th>가능한 대출</th><th>한도·금리</th></tr></thead><tbody>'
++'<tr><td>3개월~6개월</td><td>일부 2금융권 소액 운전자금</td><td>소액, 금리 높음</td></tr>'
++'<tr><td class="hg">1년~</td><td class="hg">2금융권 사업자 부동산담보대출</td><td class="hg">LTV 최대 70%</td></tr>'
++'<tr><td class="hc">2년~</td><td class="hc">1금융권 사업자 대출 가능</td><td class="hc">금리 낮음, 한도 큼</td></tr>'
++'</tbody></table>'
+
++'<p>사업자 대출은 주거용으로 사용하는 게 아니라 <strong>사업 목적(운전자금·시설자금)</strong>으로만 쓸 수 있어요. 사업자 주택담보대출은 집을 담보로 사업자금을 빌리는 구조로, 가계대출 규제에서 제외되어 LTV 70%까지 가능한 경우가 있어요. 단, 실제로 사업 목적으로 써야 하고, 주거 목적으로 유용하면 즉시 회수 + 3년간 주택 관련 대출 차단이라는 제재를 받습니다.</p>'
+
++'<p class="sect-lead"><strong>사업소득으로 신용 올리는 방법</strong></p>'
++'<p>사업자를 내고 실제 매출이 발생하면, 국세청에 소득을 신고해요. 이 소득이 신용평가사에 반영되면서 신용점수가 올라가고, 대출 심사에서 소득 증빙으로 인정받아요. 소득세 신고 후 신용에 반영되기까지 수개월이 걸리니 미리 준비해야 해요.</p>'
+
++'<p class="sect-lead"><strong>회사채(법인 대출)란?</strong></p>'
++'<div class="def">법인(회사)을 설립하고 법인 명의로 대출받는 방식이에요. 속지에 "회사채 진행 가능"이 바로 이 방식입니다. 개인 신용이 낮아도 법인의 매출 내역, 재무제표, 거래처 계약서를 기준으로 심사하기 때문에 개인 신용과는 별도로 대출이 가능한 경우가 있어요.</div>'
++'<p>법인 대출을 받으려면 법인이 실제로 운영되고 있다는 증거(거래 내역, 세금계산서, 계약서 등)가 필요해요. 종이 법인(서류만 있고 실제 운영 없음)으로는 대출이 안 나와요. 법인 설립 비용(법무사 비용 30~50만원 + 자본금)과 운영 부담이 생기는 점도 고려해야 합니다.</p>'
++'<div class="tip"><strong>💡 현장에서의 활용</strong><br>고객이 개인 대출이 꽉 찬 사업자라면, 법인 대출로 추가 자금을 조달하는 방안을 검토해 볼 수 있어요. 다만 이 경우 전문 세무사·법무사와의 상담이 필수입니다.</div>'
+;})()};
+
+C['스트레스'] = {ico:'⚡', tit:'2026 스트레스 DSR 규제 총정리', html: (function(){
+return '<div class="def"><strong>스트레스 DSR</strong>은 2024년부터 단계적으로 도입된 규제로, 2026년에 수도권·규제지역에서 가장 강화된 수준으로 적용되고 있어요. 핵심은 "현재 금리가 낮더라도, 미래에 금리가 오를 것을 가정하고 더 높은 금리로 대출 한도를 계산한다"는 거예요. 그만큼 대출 한도가 줄어드는 규제입니다.</div>'
+
++'<p class="sect-lead"><strong>스트레스 DSR이 왜 생겼나요?</strong></p>'
++'<p>2020~2022년 초저금리 시대에 많은 사람들이 낮은 금리로 대출을 받았는데, 2022년 이후 금리가 오르면서 원리금 부담이 급격히 늘어났어요. 이걸 방지하기 위해 정부가 "처음부터 금리가 높은 것처럼 계산해서 과도한 대출을 억제하겠다"는 취지로 만든 규제예요.</p>'
+
++'<table class="tbl"><thead><tr><th>지역 구분</th><th>스트레스 금리 가산</th><th>실제 효과</th></tr></thead><tbody>'
++'<tr><td>수도권·규제지역 주담대</td><td class="hr">+3.0%p</td><td class="hr">대출 한도 대폭 감소</td></tr>'
++'<tr><td>지방·비규제지역 주담대</td><td class="hg">+0.75%p</td><td class="hg">2026 상반기 유지</td></tr>'
++'<tr><td>신용대출 1억 초과</td><td class="hg">+0.75%p</td><td>일부 적용</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>실제 수치로 이해하기</strong></p>'
++'<p>연소득 5천만원인 사람이 30년 만기 4% 금리 주담대를 받는다고 가정해요.</p>'
++'<div class="cgd"><div class="cb"><h4>🏙️ 서울(수도권 규제지역)</h4><p>스트레스 +3% 적용<br>계산 금리: 4% + 3% = <strong>7%</strong><br>DSR 40% 기준<br>→ 대출 한도 약 <span class="hr">2억 5천</span></p></div><div class="cb"><h4>🌾 경기 광주(비규제지역)</h4><p>스트레스 +0.75% 적용<br>계산 금리: 4% + 0.75% = <strong>4.75%</strong><br>DSR 40% 기준<br>→ 대출 한도 약 <span class="hgr">3억 5천</span></p></div></div>'
++'<p>같은 소득인데 서울과 비규제지역의 대출 한도 차이가 1억원이나 나요. 이것이 신축빌라가 비규제지역에서 훨씬 유리한 이유입니다.</p>'
+
++'<p class="sect-lead"><strong>지역별 LTV 한도 (2026 기준)</strong></p>'
++'<table class="tbl"><thead><tr><th>구분</th><th>규제지역 LTV</th><th>비규제지역 LTV</th></tr></thead><tbody>'
++'<tr><td>무주택 생애최초</td><td class="hgr">최대 80%</td><td class="hgr">최대 80%</td></tr>'
++'<tr><td>무주택 일반</td><td class="hc">70%</td><td class="hc">70%</td></tr>'
++'<tr><td>1주택자 (처분조건부)</td><td class="hg">50~60%</td><td class="hg">60~70%</td></tr>'
++'<tr><td>다주택자</td><td class="hr">0~40%</td><td class="hg">60~70%</td></tr>'
++'</tbody></table>'
++'<div class="tip"><strong>💡 신축빌라 영업 포인트</strong><br>"서울 아파트는 규제 때문에 대출이 잘 안 나오지만, 저희가 다루는 파주·광주·안산 같은 비규제지역은 스트레스 DSR도 낮고 LTV도 70%라서 같은 소득으로 훨씬 많은 대출이 나와요." — 이걸 설명해주면 고객이 서울 아파트 대신 신축빌라로 눈을 돌리게 됩니다.</div>'
+;})()};
+
+C['근저당'] = {ico:'🔗', tit:'근저당 — 집에 묶인 빚의 표시', html: (function(){
+return '<div class="def"><strong>근저당(根抵當)</strong>이란 집을 담보로 돈을 빌릴 때, 은행이 "이 집을 담보로 잡았다"고 등기부에 공식 기록해 놓은 것이에요. 등기부등본의 <strong>을구</strong>를 보면 확인할 수 있어요. 근저당이 있다고 해서 무조건 나쁜 게 아니에요. 정상적인 주택담보대출을 받으면 당연히 근저당이 설정됩니다. 문제는 잔금 납부 후에도 근저당이 안 지워지는 경우예요.</div>'
+
++'<p class="sect-lead"><strong>🍕 피자집 비유로 완전히 이해하기</strong></p>'
++'<p>철수가 피자집 사장님한테 1,000만원을 빌렸어요. 피자집 사장님은 "혹시 못 갚으면 네 자전거 내가 가져간다"고 계약서를 쓰고 동사무소에 공식 등록했어요. 그 등록이 바로 <strong>근저당</strong>이에요. 자전거(부동산)에 "이건 내가 담보로 잡은 거야"라는 딱지를 공식으로 붙여놓은 거예요.</p>'
++'<p>부동산에서는 자전거 대신 집이 담보가 돼요. 은행이 주택담보대출을 해주면서 등기부에 "이 집은 우리 은행이 담보로 잡았습니다"라고 기록하는 게 근저당 설정이에요.</p>'
+
++'<p class="sect-lead"><strong>채권최고액이란?</strong></p>'
++'<div class="cgd"><div class="cb"><h4>📋 등기부에 적히는 숫자</h4><p>예시: 채권최고액 2억 4천만원<br>실제 대출의 약 120%로 설정<br>왜? 이자·연체료·경매비용까지 포함해서 넉넉하게 잡기 때문</p></div><div class="cb"><h4>💸 실제 대출금</h4><p>예시: 실제 대출 2억원<br>채권최고액 ÷ 1.2 = 실제 대출 추정<br>2억 4천 ÷ 1.2 = 2억원</p></div></div>'
+
++'<p class="sect-lead"><strong>근저당이 있는 집을 살 때 어떻게 해야 하나요?</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn">1</div><div class="st"><strong>계약 전</strong> — 등기부등본 을구를 확인해서 근저당이 얼마나 잡혀있는지 확인. 집값 대비 근저당이 너무 크면 위험 신호.</div></div>'
++'<div class="si"><div class="sn">2</div><div class="st"><strong>잔금 전날</strong> — 다시 한번 등기부등본을 발급해서 새로운 근저당이 추가로 잡히지 않았는지 확인 (매우 중요!).</div></div>'
++'<div class="si"><div class="sn">3</div><div class="st"><strong>잔금일 당일</strong> — 법무사가 잔금 이체와 동시에 기존 근저당을 말소(삭제)하고 새 소유자 명의로 등기를 진행. 이걸 "동시 진행"이라고 해요.</div></div>'
++'<div class="si"><div class="sn">4</div><div class="st"><strong>등기 완료 후</strong> — 새 등기부등본을 발급해서 기존 근저당이 정상적으로 말소됐는지 최종 확인.</div></div>'
++'</div>'
++'<div class="wrn"><strong>⚠️ 실제 피해 사례</strong><br>영희가 3억짜리 집을 계약하고 잔금을 냈어요. 그런데 법무사가 근저당 말소를 깜빡하거나, 잔금 당일 전 주인이 추가 대출을 더 받아서 근저당이 늘어났는데 확인을 못 했어요. 결국 영희 집에 전 주인 빚 2억이 그대로 남아서, 전 주인이 돈을 못 갚자 은행이 영희 집을 경매에 넘겼어요. 잔금 전날 확인은 정말 필수입니다.</div>'
+;})()};
+
+C['압류'] = {ico:'🚫', tit:'압류·가처분·예고등기 차이', html: (function(){
+return '<div class="def">등기부등본 갑구(소유권 관련 항목)에 이런 단어들이 보이면 그 집은 법적으로 심각한 문제가 있는 상태예요. 절대로 계약하면 안 되는 신호들이에요. 이걸 모르고 계약하면 돈을 다 내고도 집을 못 받는 최악의 상황이 발생할 수 있어요.</div>'
+
++'<p class="sect-lead"><strong>압류 (差押)</strong></p>'
++'<div class="def"><strong>🍎 사과나무 비유:</strong><br>친구에게 1억을 빌려줬는데 안 갚아요. 법원에 가서 "저 친구 사과나무 팔지 못하게 막아주세요"라고 신청해요. 법원이 사과나무에 "이거 팔거나 담보 잡으면 안 됩니다" 딱지를 붙이는 게 <strong>압류</strong>예요.<br><br>부동산에서는 집주인이 세금을 안 내거나 빚을 못 갚을 때, 국가(세무서·법원)나 채권자가 "이 집 팔지 마라"고 막아두는 것이에요. 압류가 걸린 집은 소유자가 마음대로 팔 수도, 담보로 잡을 수도 없어요.</div>'
+
++'<p class="sect-lead"><strong>가처분 (假處分)</strong></p>'
++'<div class="def"><strong>🎮 게임 비유:</strong><br>게임에서 내 아이템을 누군가가 훔쳐갔어요. "이거 내 거야!" 하고 소송을 걸었는데, 소송이 끝나기도 전에 상대방이 그 아이템을 다른 사람한테 팔아버리면 소용없잖아요. 그래서 법원이 "소송 끝날 때까지 그 아이템 팔지 마"라고 잠금을 거는 게 <strong>가처분</strong>이에요.<br><br>부동산에서는 집 소유권에 분쟁이 생겼을 때, 법원이 "소송 결과 나올 때까지 이 집 팔거나 담보 잡지 마"라고 하는 조치예요.</div>'
+
++'<p class="sect-lead"><strong>예고등기</strong></p>'
++'<div class="def">법원에서 이 집의 소유권이 곧 바뀔 수 있다고 사전에 공고해 놓은 등기예요. 보통 소유권 취소 소송이나 사기 거래 해제 소송이 진행 중일 때 붙어요. "이 집 소유권이 불안정하다"는 경고 표시입니다.</div>'
+
++'<table class="tbl"><thead><tr><th>종류</th><th>의미</th><th>위험도</th><th>계약 가능 여부</th></tr></thead><tbody>'
++'<tr><td>압류</td><td>빚·세금 미납으로 국가가 처분 금지</td><td class="hr">🔴 매우 위험</td><td class="hr">절대 불가</td></tr>'
++'<tr><td>가처분</td><td>소유권 분쟁 중 처분 금지</td><td class="hr">🔴 매우 위험</td><td class="hr">절대 불가</td></tr>'
++'<tr><td>예고등기</td><td>소유권 변동 예고</td><td class="hg">🟡 주의 필요</td><td class="hg">전문가 확인 후 판단</td></tr>'
++'<tr><td>근저당</td><td>담보 대출 표시 (정상 거래)</td><td class="hgr">🟢 일반적</td><td class="hgr">말소 조건부 가능</td></tr>'
++'</tbody></table>'
++'<div class="wrn"><strong>⚠️ 이 경우 절대 계약하면 안 됩니다</strong><br>압류·가처분이 있는 집은 잔금을 다 내고 등기를 넘겨받아도 법원의 결정에 따라 다시 빼앗길 수 있어요. 계약금을 날리는 게 아니라 집 전체를 날리는 최악의 상황이 될 수 있어요.</div>'
+;})()};
+
+C['선후순위'] = {ico:'🥇', tit:'선순위 vs 후순위 — 순서가 왜 중요한가', html: (function(){
+return '<div class="def">집이 경매로 넘어가면 팔린 돈을 여러 채권자들이 나눠가져요. 이때 <strong>누가 먼저 돈을 받느냐</strong>는 등기부에 기록된 순서, 즉 누가 먼저 권리를 등록했느냐에 따라 결정돼요. 이걸 <strong>선순위(앞 순위)</strong>, <strong>후순위(뒤 순위)</strong>라고 해요.</div>'
+
++'<p class="sect-lead"><strong>🎪 놀이공원 줄서기 비유로 완전 이해</strong></p>'
++'<div class="def">인기 놀이기구에 100명이 줄을 서있어요. 오늘 탈 수 있는 자리는 50개뿐이에요.<br>앞에 선 50명 → 타요 (= 돈 받아요)<br>뒤에 선 50명 → 못 타요 (= 돈 못 받아요)<br><br>집 경매에서도 똑같아요. 먼저 등록한 채권자부터 돈을 받고, 남으면 다음 순위가 받아요. 남는 게 없으면 후순위는 한 푼도 못 받아요.</div>'
+
++'<p class="sect-lead"><strong>실제 경매 사례</strong></p>'
++'<p>3억짜리 집이 경매에서 2억 8천에 팔렸어요. 채권자들이 다음과 같이 있어요.</p>'
++'<table class="tbl"><thead><tr><th>순위</th><th>채권자</th><th>금액</th><th>받는 금액</th></tr></thead><tbody>'
++'<tr><td>🥇 1순위</td><td>국민은행 (근저당)</td><td>2억원 청구</td><td class="hgr">2억원 전액 수령</td></tr>'
++'<tr><td>🥈 2순위</td><td>임차인 (전입신고·확정일자)</td><td>5천만원 청구</td><td class="hg">5천만원 전액 수령 (8천 남아있으므로)</td></tr>'
++'<tr><td>🥉 3순위</td><td>저축은행 (후순위 근저당)</td><td>3천만원 청구</td><td class="hr">3천만원 청구했지만 0원 수령 (남은 돈 없음)</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>세입자가 선순위를 지키는 방법</strong></p>'
++'<p>세입자(임차인)가 자신의 보증금을 지키려면 선순위가 되어야 해요. 이를 위한 두 가지 무기가 있어요.</p>'
++'<div class="slist">'
++'<div class="si"><div class="sn gn">1</div><div class="st"><strong>전입신고</strong> — 이사한 날 바로 주민센터에 가서 전입신고를 해야 해요. 전입신고 다음날 0시부터 "대항력"이 생겨요. 대항력이란 집이 팔려도 새 주인한테 계속 살 수 있는 권리예요.</div></div>'
++'<div class="si"><div class="sn gn">2</div><div class="st"><strong>확정일자</strong> — 계약서에 주민센터·공증사무소 도장을 받는 거예요. 이 날짜가 빠를수록 경매 시 보증금을 먼저 받을 수 있는 순위가 앞당겨져요.</div></div>'
++'</div>'
++'<div class="tip"><strong>💡 신축빌라 매매가 전세보다 안전한 이유</strong><br>매매로 소유권 이전 등기를 받으면 내가 바로 집주인이 돼요. 경매 위험 자체가 없어요. 전세는 임차인 신분이라 집주인이 돈 못 갚으면 보증금을 날릴 수 있지만, 매매는 내가 주인이라 그런 위험이 없습니다. 이게 "전세 사는 것보다 차라리 내 집 사는 게 낫다"는 논리의 핵심이에요.</div>'
+;})()};
+
+C['전입확정'] = {ico:'📅', tit:'전입신고·확정일자 — 세입자 보호 무기', html: (function(){
+return '<div class="def">집을 전세나 월세로 빌려서 사는 세입자(임차인)는 보증금을 지키기 위해 두 가지를 반드시 해야 해요. <strong>전입신고</strong>와 <strong>확정일자</strong>예요. 이 두 가지를 이사 당일 바로 해야 최대한 선순위를 확보할 수 있어요.</div>'
+
++'<div class="cgd"><div class="cb"><h4>📋 전입신고란?</h4><p>이사한 날 주민센터에 "나 여기 이사왔어요"라고 신고하는 것. 신고 다음날 0시부터 <strong>대항력</strong>이 생겨요. 대항력 = 집이 팔려도 새 주인한테 계속 살 수 있는 권리. 카카오톡, 정부24 앱으로도 가능.</p></div><div class="cb"><h4>🗓️ 확정일자란?</h4><p>임대차 계약서에 동사무소·법원·공증사무소에서 "오늘 날짜에 이 계약서가 존재했음"을 공식 확인하는 도장. 이 날짜를 기준으로 경매 시 보증금을 받을 순위가 정해져요. 확정일자가 빠를수록 우선순위.</p></div></div>'
+
++'<p class="sect-lead"><strong>🚂 기차 예약 비유</strong></p>'
++'<div class="def">KTX 자리를 먼저 예약한 사람이 앉아서 가요. 나중에 예약한 사람은 자리가 없으면 못 타요.<br><br>확정일자 = 기차 예약 날짜를 공식 기록으로 남기는 것.<br>날짜가 빠른 사람이 경매 돈을 먼저 받아요.<br>내가 먼저 확정일자를 받았어도, 그 전에 은행이 이미 근저당을 잡았다면 은행이 1순위예요.</div>'
+
++'<p class="sect-lead"><strong>전입신고와 확정일자의 효력</strong></p>'
++'<table class="tbl"><thead><tr><th>행위</th><th>효력 발생 시점</th><th>권리 내용</th></tr></thead><tbody>'
++'<tr><td>전입신고</td><td class="hg">신고 다음날 0시</td><td>대항력 (새 주인한테도 살 수 있는 권리)</td></tr>'
++'<tr><td>확정일자</td><td class="hg">받은 날부터</td><td>우선변제권 (경매 시 순위대로 보증금 받을 권리)</td></tr>'
++'<tr><td>전입신고+확정일자 둘 다</td><td class="hc">다음날 0시부터 완전 보호</td><td>대항력 + 우선변제권 모두 확보</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>실제 피해·성공 사례 비교</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn rn">❌</div><div class="st"><strong>피해 사례:</strong> 영희가 보증금 1억을 내고 이사했는데 귀찮아서 전입신고를 3주 뒤에 했어요. 그 3주 사이에 집주인이 은행에서 대출 2억을 받아서 근저당을 잡았어요. 나중에 집이 경매로 넘어갔는데 은행(1순위)이 2억을 먼저 가져가고, 영희 보증금 1억은 부족해서 일부만 받았어요.</div></div>'
++'<div class="si"><div class="sn gn">✅</div><div class="st"><strong>성공 사례:</strong> 철수가 보증금 8천만원을 내고 이사 당일 전입신고 + 확정일자를 동시에 받았어요. 집이 나중에 경매로 넘어갔는데, 철수의 확정일자가 은행 근저당보다 먼저라 철수가 1순위가 됐고 8천만원 전액을 먼저 받았어요.</div></div>'
++'</div>'
++'<div class="tip"><strong>💡 매매로 전환하면 이 걱정이 없어요</strong><br>신축빌라를 매매로 구입하면 소유권이 고객 명의로 이전되기 때문에 전입신고·확정일자 같은 임차인 보호 장치가 필요 없어요. 경매 위험 자체가 없는 구조입니다. 이 점을 전세 거주 고객에게 강조하면 매수 의향을 높일 수 있어요.</div>'
+;})()};
+
+C['공시가'] = {ico:'💹', tit:'공시가 vs 감정가 vs 시세 차이', html: (function(){
+return '<div class="def">같은 집인데 가격이 세 가지예요. 부동산을 다루다 보면 "공시가격", "감정평가금액", "시세(실거래가)" 이 세 가지가 자주 나오는데, 각각 목적이 달라서 숫자가 다르게 나와요. 이 차이를 이해해야 세금 계산, 대출 한도 계산, 매물 가격 분석을 정확하게 할 수 있어요.</div>'
+
++'<table class="tbl"><thead><tr><th>종류</th><th>누가 정하나</th><th>무슨 용도</th><th>시세 대비 비율</th></tr></thead><tbody>'
++'<tr><td class="hc">시세 (실거래가)</td><td>시장 (실제 사고판 가격)</td><td>실제 매매 기준</td><td class="hc">100%</td></tr>'
++'<tr><td class="hg">감정평가금액</td><td>전문 감정평가사</td><td>대출 한도 계산 기준</td><td class="hg">시세의 90~110%</td></tr>'
++'<tr><td>공시가격</td><td>국토교통부 (매년 4월 발표)</td><td>재산세·종부세·건보료 부과 기준</td><td>시세의 60~70%</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>🍎 사과로 완전 이해하기</strong></p>'
++'<div class="def">마트에서 사과 한 박스가 <strong>3만원</strong>에 팔려요 → 이게 <span class="hc">시세</span>예요.<br><br>과일 전문가(감정평가사)가 "이 사과 당도·크기·신선도 보니까 <strong>3만 3천원</strong> 짜리네요" → 이게 <span class="hg">감정평가금액</span>이에요.<br>→ 은행이 이 기준으로 대출을 줘요. 감정가가 3만 3천이면 80% = 2만 6천 4백원 대출 가능.<br><br>세금 낼 때 국가가 "사과 세금은 <strong>2만원</strong> 기준으로 내세요"라고 정해놓음 → 이게 <span style="color:#aac0d8">공시가격</span>이에요.<br>→ 실제 시장 가격보다 낮게 책정해서 세금 부담을 줄여줘요.</div>'
+
++'<p class="sect-lead"><strong>왜 신축빌라는 감정가가 분양가보다 높게 나올까요?</strong></p>'
++'<p>신축빌라는 준공 시점에 감정평가를 받아요. 이때 마감재가 좋고, 풀옵션 가전이 들어있고, 입지도 좋은 물건이면 감정평가사가 "이 집은 이 가격 이상의 가치가 있다"고 평가해서 분양가보다 높은 감정가를 줄 수 있어요. 이것이 전액대출의 핵심 원리입니다.</p>'
+
++'<p class="sect-lead"><strong>공시가격이 낮으면 뭐가 좋나요?</strong></p>'
++'<p>공시가격이 낮으면 재산세, 종합부동산세, 건강보험료(피부양자 탈락 기준)가 낮아져요. 신축빌라는 시세 대비 공시가가 낮은 경우가 많아서 보유 비용 부담이 아파트보다 작아요. 이것도 신축빌라의 장점 중 하나입니다.</p>'
++'<div class="tip"><strong>💡 상담에서 활용하기</strong><br>"공시가가 낮으면 재산세가 적고, 감정가가 높으면 대출이 많이 나오고, 시세가 오르면 자산이 늘어나요. 신축빌라는 세 가지 측면에서 모두 유리한 구조예요." 이렇게 설명해주면 고객 설득에 도움이 됩니다.</div>'
+;})()};
+
+C['소유권'] = {ico:'🔑', tit:'소유권 이전 등기 — 집이 진짜 내 것이 되는 순간', html: (function(){
+return '<div class="def"><strong>소유권 이전 등기</strong>란 "이 집의 주인이 A(판매자)에서 B(구매자)로 바뀌었다"고 등기소(법원)에 공식 신청하고 기록하는 절차예요. 잔금을 다 내도 이 등기가 완료되기 전까지는 법적으로 아직 내 집이 아니에요. 등기부에 내 이름이 올라가는 순간이 진짜 내 집이 되는 순간입니다.</div>'
+
++'<p class="sect-lead"><strong>🚗 자동차 명의 이전 비유</strong></p>'
++'<div class="def">중고차를 1,000만원에 샀어요. 돈은 다 드렸는데 차량 등록증에는 아직 전 주인 이름이에요. 이 상태에서 전 주인이 세금을 안 내면 세무서가 그 차를 압류할 수 있어요. "내가 이미 돈 냈는데요!"라고 해도 소용없어요. 명의 이전(자동차 등록)이 완료돼야 진짜 내 차가 되는 거예요.<br><br>부동산도 똑같아요. 잔금을 다 내도 소유권 이전 등기가 완료되어야 진짜 내 집이에요.</div>'
+
++'<p class="sect-lead"><strong>소유권 이전 등기 절차</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn">1</div><div class="st"><strong>잔금 납부</strong> — 대출 실행 + 내 돈(실입금)을 합쳐서 분양사에 잔금 이체.</div></div>'
++'<div class="si"><div class="sn">2</div><div class="st"><strong>법무사 선임</strong> — 법무사가 소유권 이전에 필요한 서류를 준비해요. 매도인 인감증명서·등기권리증, 매수인 주민등록증·도장 등이 필요해요.</div></div>'
++'<div class="si"><div class="sn">3</div><div class="st"><strong>등기소 신청</strong> — 법무사가 관할 등기소에 소유권 이전 신청을 해요. 취득세 납부 영수증도 함께 제출해요.</div></div>'
++'<div class="si"><div class="sn">4</div><div class="st"><strong>등기 완료</strong> — 보통 2~3영업일 내에 등기부에 고객(새 소유자) 이름이 등재돼요. 이 시점부터 진짜 고객 소유!</div></div>'
++'<div class="si"><div class="sn">5</div><div class="st"><strong>전입신고</strong> — 등기 완료 후 이사하면 주민센터에 전입신고. 행정적으로 이사 완료 처리.</div></div>'
++'</div>'
+
++'<p class="sect-lead"><strong>법무사 비용은 얼마나 드나요?</strong></p>'
++'<p>소유권 이전 등기는 반드시 법무사(또는 등기사)가 대행해요. 비용은 대략 30~80만원 수준이며, 집값과 지역에 따라 다를 수 있어요. 일부 분양사에서는 법무사 비용도 지원해주는 경우가 있으니 속지를 꼼꼼히 확인하세요. 취득세 납부는 별도이며, 취득일로부터 60일 이내에 해야 해요.</p>'
++'<div class="wrn"><strong>⚠️ 반드시 잔금 전날 등기부 최종 확인</strong><br>계약 후 잔금 전까지 사이에 전 주인이 추가 대출을 받아서 새 근저당이 잡히거나, 세금 체납으로 압류가 붙는 경우가 실제로 있어요. 잔금 전날 또는 당일 아침에 반드시 등기부등본을 다시 발급해서 확인해야 합니다.</div>'
+;})()};
+
+C['대지지분'] = {ico:'📐', tit:'대지지분·건폐율·용적률 쉽게 이해', html: (function(){
+return '<div class="def">부동산에서 자주 나오는 세 가지 개념이에요. 대지지분은 내 집이 얼마만큼의 땅을 가지고 있는지, 건폐율은 땅에 건물을 얼마나 넓게 지을 수 있는지, 용적률은 총 몇 층까지 지을 수 있는지에 대한 비율이에요. 이 세 가지를 알면 왜 어떤 집은 대출이 많이 나오고 어떤 집은 적게 나오는지 이해할 수 있어요.</div>'
+
++'<p class="sect-lead"><strong>대지지분 — 내가 가진 땅의 몫</strong></p>'
++'<div class="def"><strong>🍕 피자 나누기 비유:</strong><br>500㎡짜리 땅 위에 빌라 건물이 있어요. 그 빌라에 10세대가 살고 있어요.<br>이 땅 500㎡를 10세대가 똑같이 나눠 가지면 각 세대의 대지지분은 <strong>50㎡</strong>예요.<br><br>대지지분이 클수록 → 내가 가진 땅이 많다는 뜻 → 토지 가치가 높아짐 → 감정평가 금액이 올라감 → 대출이 더 많이 나옴.</div>'
++'<p>신축빌라 속지에서 "대지 30㎡", "대지 15㎡" 이런 숫자들이 바로 대지지분이에요. 세대수가 많고 건물이 클수록 대지지분이 작아져요. 대지지분이 너무 작으면 감정가가 낮게 나와서 대출 한도가 줄어들 수 있어요.</p>'
+
++'<p class="sect-lead"><strong>건폐율 — 땅에 얼마나 넓게 집을 지을 수 있나</strong></p>'
++'<div class="def"><strong>☀️ 햇빛과 그늘 비유:</strong><br>100㎡짜리 땅이 있어요. 건폐율이 60%라면 → 바닥 면적 60㎡까지만 건물을 지을 수 있어요.<br>나머지 40㎡는 마당, 주차장, 조경 등으로 남겨야 해요.<br><br>건폐율이 낮을수록 → 건물이 차지하는 비율이 작아짐 → 주변이 넓고 햇빛이 잘 들어옴 → 쾌적한 주거환경.</div>'
++'<p>일반주거지역은 건폐율 60% 이하, 2종 일반주거지역은 60% 이하, 1종은 50% 이하로 제한돼요. 건폐율이 법정 한도를 초과해서 지어진 건물은 불법 건축물이에요. 건축물대장에서 확인 가능합니다.</p>'
+
++'<p class="sect-lead"><strong>용적률 — 총 몇 층까지 지을 수 있나</strong></p>'
++'<div class="def"><strong>🏢 레고 쌓기 비유:</strong><br>100㎡짜리 땅에 용적률이 200%라면 → 총 건물 면적이 200㎡ 이하여야 해요.<br>각 층 면적이 100㎡라면 2층까지 가능. 각 층 50㎡면 4층까지 가능.<br><br>용적률이 높을수록 → 더 높은 건물 지을 수 있음 → 세대수 많아짐 → 근처에 고층 건물 가능</div>'
++'<p>주거지역별 용적률은 1종 100~200%, 2종 150~250%, 3종 200~300% 수준이에요. 용적률이 높은 지역은 상대적으로 고밀도 개발이 가능해서 아파트 단지도 들어올 수 있어요.</p>'
+
++'<table class="tbl"><thead><tr><th>용어</th><th>의미</th><th>높으면</th><th>낮으면</th></tr></thead><tbody>'
++'<tr><td class="hc">대지지분</td><td>내가 가진 땅의 몫</td><td class="hgr">감정가↑, 대출↑</td><td class="hr">감정가↓, 대출↓</td></tr>'
++'<tr><td class="hg">건폐율</td><td>땅 대비 건물 바닥 면적 비율</td><td>빽빽하고 답답</td><td class="hgr">넓고 쾌적</td></tr>'
++'<tr><td class="hg">용적률</td><td>땅 대비 전체 건물 면적 비율</td><td>고층 가능, 세대↑</td><td>저층 건물</td></tr>'
++'</tbody></table>'
++'<div class="tip"><strong>💡 실무 활용</strong><br>속지에서 대지지분을 꼭 확인하세요. 대지지분이 클수록 감정가가 유리하게 나와서 전액대출 가능성이 높아져요. 10세대 이하 소규모 빌라에서 세대당 대지지분이 20㎡ 이상이면 양호한 수준이에요.</div>'
+;})()};
+
+C['채권최고'] = {ico:'💰', tit:'채권최고액 — 은행이 을구에 적는 숫자', html: (function(){
+return '<div class="def"><strong>채권최고액</strong>이란 근저당 설정 시 등기부 을구에 기재되는 금액이에요. 실제 대출금보다 항상 <strong>20~30% 더 크게</strong> 적어요. 이 숫자를 보고 "빚이 이 금액이구나"라고 오해하기 쉬운데, 실제 대출금은 이보다 적어요.</div>'
+
++'<p class="sect-lead"><strong>📏 30cm 자 비유로 이해하기</strong></p>'
++'<div class="def">30cm짜리 선을 그어야 해요. 그런데 혹시 실수로 짧게 그을 수도 있으니까 33cm짜리 자를 준비했어요. 여유 있게 준비한 거예요.<br><br>실제 대출: 2억원 (30cm에 해당)<br>채권최고액: 2억 4천만원 (33cm에 해당, 120% 수준)<br><br>왜 더 크게 적나요? 이자, 연체료, 경매 진행 비용까지 혹시 모를 모든 비용을 포함해서 넉넉하게 잡아두기 때문이에요.</div>'
+
++'<p class="sect-lead"><strong>채권최고액 → 실제 대출 추정 공식</strong></p>'
++'<div class="fbox">실제 대출 추정액 = 채권최고액 ÷ 1.2<br><span style="font-size:13px;color:#aac0d8">예시: 채권최고액 2억 4천 ÷ 1.2 = 실제 대출 약 2억원</span></div>'
+
++'<p class="sect-lead"><strong>등기부에서 실제로 어떻게 생겼나요?</strong></p>'
++'<div class="def">을구 2번: 근저당권 설정<br>채권최고액: 금 이백사십만원 (240,000,000원)<br>채무자: 홍길동<br>근저당권자: 국민은행<br><br>이렇게 적혀있으면 → 홍길동이 국민은행에서 실제로 약 2억원(240,000,000 ÷ 1.2)을 빌린 것으로 추정할 수 있어요.</div>'
+
++'<p class="sect-lead"><strong>주의해야 할 경우</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn rn">1</div><div class="st"><strong>채권최고액이 집값의 80% 이상</strong>이면 → 실제 대출이 집값의 66% 이상이라는 뜻 → 집이 경매로 팔려도 남는 돈이 거의 없음 → 전세 들어가면 보증금 날릴 위험.</div></div>'
++'<div class="si"><div class="sn rn">2</div><div class="st"><strong>여러 개의 근저당이 중첩</strong>되어 있으면 → 합계 채권최고액이 집값을 초과할 수 있음 → 완전한 깡통 집.</div></div>'
++'<div class="si"><div class="sn gn">3</div><div class="st"><strong>잔금일에 말소(삭제) 조건부</strong>로 계약한 경우 → 잔금 치르면서 동시에 근저당이 지워짐 → 정상적인 거래 방식.</div></div>'
++'</div>'
++'<div class="wrn"><strong>⚠️ 깡통 집 판단 기준</strong><br>채권최고액 ÷ 1.2 (실제 대출) + 임차인 보증금 합계 &gt; 집값의 70~80%이면 경매 시 보증금을 전액 받지 못할 위험이 있어요. 매매로 직접 소유권을 가져오면 이 위험에서 벗어납니다.</div>'
+;})()};
+
+C['체크리스트'] = {ico:'✅', tit:'계약 전 꼭 확인할 체크리스트', html: (function(){
+return '<div class="def">신축빌라 계약 전에 반드시 확인해야 할 항목들이에요. 이 체크리스트를 빠짐없이 확인해야 나중에 문제가 생기지 않아요. 고객과 현장 방문 시 함께 점검하면서 신뢰를 쌓을 수 있어요.</div>'
+
++'<p class="sect-lead"><strong>📄 서류 확인 (반드시)</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>등기부등본 을구</strong> — 근저당 설정 여부, 채권최고액 확인. 잔금 전날 다시 한번 발급해서 새 근저당이 없는지 최종 확인.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>등기부등본 갑구</strong> — 소유자가 분양사인지 확인. 압류·가처분·예고등기가 없는지 확인.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>건축물대장</strong> — 건물 구조·용도·건폐율·용적률 확인. 불법 증축 여부 확인. "위반건축물" 표시가 있으면 위험.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>토지이용계획원</strong> — 해당 토지에 어떤 규제가 있는지 확인. 개발 제한 구역 여부, 도로 접도 여부 등.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>분양사(시행사) 법인 등기부</strong> — 자본금 규모, 설립 시기, 법인에 압류·가처분이 있는지 확인. 자본금이 너무 작거나 법인에 문제가 있으면 주의.</div></div>'
++'</div>'
+
++'<p class="sect-lead"><strong>🏠 현장 확인 항목</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>주차 구조</strong> — 자주식인지 기계식인지 확인. 자주식이 고장 위험이 없고 편해요. 세대당 1대 이상 가능한지.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>층간소음</strong> — 바닥 두께(120mm 이상 권장), 화장실 위치(옆 세대 화장실 벽을 맞대고 있으면 소음 심함), 단독 vs 공동 구조.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>채광·향</strong> — 거실 창문이 남향인지. 옆 건물이 햇빛을 가리지 않는지. 실제로 낮에 방문해서 확인하는 게 가장 정확해요.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>마감재 품질</strong> — 바닥재, 창호, 도어, 주방 싱크대, 욕실 타일 품질 확인. 고급 마감일수록 감정가가 높게 나와요.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>옵션 현황</strong> — 시스템에어컨, 빌트인 냉장고, 식기세척기, 세탁기 등 포함 여부. 옵션이 많을수록 감정가에 유리.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>입주 가능일</strong> — 즉시 입주 가능한지, 준공 예정일이 언제인지. 준공 전 계약 시 공사 지연 위험도 고려.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>관리비 수준</strong> — 엘리베이터 유무, 경비실 유무에 따라 관리비가 달라져요. 예상 월 관리비를 사전에 확인하세요.</div></div>'
++'</div>'
+
++'<p class="sect-lead"><strong>💰 금융 조건 확인</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>취득세 지원 여부</strong> — 얼마를 지원하는지 구체적 금액 확인. 조건(예: 당일 계약자만)이 있는지 확인.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>R 지급 시점과 조건</strong> — 계약 완료 후 언제 지급되는지, 더블 인정 여부, 선입금 조건 등 확인.</div></div>'
++'<div class="si"><div class="sn">✓</div><div class="st"><strong>담보실입(은행융자 한도)</strong> — 예상 대출 한도가 얼마인지. 고객 소득 기준으로 실제 나올 수 있는 금액인지 사전 검토.</div></div>'
++'</div>'
++'<div class="wrn"><strong>⚠️ 절대 빠뜨리면 안 되는 것</strong><br>잔금 당일 아침에 등기부등본을 다시 발급하세요. 전날 밤 사이에도 전 주인이 추가 대출을 받거나 압류가 붙을 수 있어요.</div>'
+;})()};
+
+C['전세사기'] = {ico:'🚨', tit:'전세사기 유형 & 신축빌라 안전 기준', html: (function(){
+return '<div class="def">최근 수년간 전세사기로 보증금을 날린 피해자가 수만 명에 달해요. 이런 불안감을 가진 고객에게 신축빌라 매매가 왜 안전한지 설명하려면 전세사기의 구조를 먼저 이해해야 해요.</div>'
+
++'<p class="sect-lead"><strong>전세사기 주요 유형 6가지</strong></p>'
++'<div class="irow"><span class="lb">깡통전세</span><span class="vl">집값보다 전세금이 더 많은 상태. 집이 경매로 넘어가면 은행이 먼저 가져가고 전세금은 날아가요. "전세가율 80% 이상"인 집은 위험 신호.</span></div>'
++'<div class="irow"><span class="lb">이중계약</span><span class="vl">같은 집에 두 명의 세입자와 동시에 전세 계약을 맺는 사기. 나중에 계약한 사람은 입주도 못 하고 보증금도 날려요.</span></div>'
++'<div class="irow"><span class="lb">대리인 사기</span><span class="vl">진짜 집주인이 아닌 사람이 위임장을 위조해서 계약을 맺는 사기. 계약 전 반드시 신분증·등기부등본을 대조해서 실제 소유자인지 확인.</span></div>'
++'<div class="irow"><span class="lb">신탁 사기</span><span class="vl">집이 신탁사에 신탁되어 있는 상태에서 집주인이 임의로 전세 계약을 맺는 경우. 신탁사 동의 없이는 계약 효력이 없어요.</span></div>'
++'<div class="irow"><span class="lb">선순위 임차인</span><span class="vl">내가 계약하기 전에 이미 먼저 전입신고한 세입자가 있어서, 내 보증금 순위가 뒤로 밀리는 경우.</span></div>'
++'<div class="irow"><span class="lb">빌라왕 유형</span><span class="vl">한 사람이 수십~수백 채의 빌라를 전세 레버리지로 매입하다가 한꺼번에 파산하는 경우. 피해자가 수백 명에 달해요.</span></div>'
+
++'<p class="sect-lead"><strong>신축빌라 매매가 전세보다 안전한 이유</strong></p>'
++'<div class="def"><strong>전세는 임차인(세입자) 신분</strong>이에요. 집주인이 돈을 못 갚으면 보증금을 잃을 수 있어요.<br><strong>매매는 소유자 신분</strong>이에요. 내가 집주인이 되니까 위에서 설명한 전세사기 위험이 아예 없어요.<br><br>"전세 보증금 1억으로 불안하게 살 바에야, 같은 돈으로 내 집 마련하는 게 훨씬 안전하고 자산도 쌓아요."</div>'
+
++'<p class="sect-lead"><strong>분양(시행사) 관련 사기 주의점</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn rn">⚠</div><div class="st"><strong>시행사 법인 등기부 확인</strong> — 자본금이 너무 작거나(1천만원 미만), 설립한 지 얼마 안 됐거나, 법인에 이미 압류·가처분이 있으면 주의.</div></div>'
++'<div class="si"><div class="sn rn">⚠</div><div class="st"><strong>준공 전 계약 시 잔금 관리</strong> — 준공 전에 계약금을 내면 시행사가 부도날 경우 돌려받기 어려울 수 있어요. 계약금 에스크로(중립 계좌 예치) 조건을 요청하세요.</div></div>'
++'<div class="si"><div class="sn rn">⚠</div><div class="st"><strong>미분양 물건 과도한 할인</strong> — 평균 시세보다 30% 이상 낮은 가격은 재정 위기 신호일 수 있어요.</div></div>'
++'</div>'
++'<div class="tip"><strong>💡 이렇게 말해주세요</strong><br>"전세사기 뉴스 많이 보셨죠? 저희 신축빌라는 분양 계약이라서 소유권 이전 등기를 바로 받아요. 세입자 신분이 아니라 집주인이 되는 거라 전세사기 위험이 아예 없는 구조예요."</div>'
+;})()};
+
+C['등기부'] = {ico:'📄', tit:'등기부등본 읽는 법', html: (function(){
+return '<div class="def"><strong>등기부등본</strong>은 집의 모든 법적 권리 관계가 담긴 공문서예요. 누가 주인인지, 빚이 얼마나 있는지, 법적 제한이 있는지 등 모든 정보가 여기에 기록돼 있어요. 인터넷 대법원 등기소(www.iros.go.kr)에서 700원에 발급받을 수 있어요. 분양 상담 시 필수로 확인해야 합니다.</div>'
+
++'<p class="sect-lead"><strong>등기부등본 3가지 구성</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn gold">표</div><div class="st"><strong>표제부</strong> — 건물의 기본 정보. 주소, 건물 구조(철근콘크리트·벽돌 등), 용도(주택·오피스텔·근생), 전체 층수, 각 층 면적이 적혀있어요.</div></div>'
++'<div class="si"><div class="sn">갑</div><div class="st"><strong>갑구 (소유권 관련)</strong> — <span class="hc">소유자가 누구인지</span>, 언제 소유권이 바뀌었는지 기록. 여기서 <span class="hr">압류, 가처분, 예고등기</span>를 확인해야 해요. 이게 있으면 계약 금지.</div></div>'
++'<div class="si"><div class="sn rn">을</div><div class="st"><strong>을구 (소유권 이외 권리)</strong> — <span class="hr">근저당권(담보대출), 전세권, 지상권</span> 등이 기록. 근저당이 얼마나 잡혀있는지 확인. 채권최고액 ÷ 1.2 = 실제 대출 추정.</div></div>'
++'</div>'
+
++'<p class="sect-lead"><strong>현장에서 빠르게 체크하는 방법</strong></p>'
++'<p>처음 등기부등본을 보면 복잡해 보이는데, 실무에서는 이 세 가지만 빠르게 체크하면 돼요.</p>'
++'<div class="slist">'
++'<div class="si"><div class="sn">1</div><div class="st">갑구 최신란 — 현재 소유자가 분양사(시행사) 이름인지 확인. 이름이 다른 개인이면 의심.</div></div>'
++'<div class="si"><div class="sn">2</div><div class="st">갑구 전체 — 압류, 가처분, 예고등기 키워드가 있는지 스캔. 있으면 계약 금지.</div></div>'
++'<div class="si"><div class="sn">3</div><div class="st">을구 — 근저당 총액(채권최고액 합계)이 집값의 몇 %인지 계산. 80% 이상이면 주의.</div></div>'
++'</div>'
+
++'<p class="sect-lead"><strong>등기부등본 발급 방법</strong></p>'
++'<div class="irow"><span class="lb">온라인</span><span class="vl">대법원 인터넷 등기소 (www.iros.go.kr) — 700원, 공인인증서 필요, 즉시 발급 가능</span></div>'
++'<div class="irow"><span class="lb">앱</span><span class="vl">스마트폰 앱 "등기부등본" 검색 — 모바일에서도 발급 가능</span></div>'
++'<div class="irow"><span class="lb">등기소 방문</span><span class="vl">관할 등기소 직접 방문 — 창구에서 신청 후 즉시 수령</span></div>'
+
++'<div class="wrn"><strong>⚠️ 잔금 전날 꼭 다시 발급하세요</strong><br>계약 시 확인한 등기부등본은 그 순간의 상태예요. 잔금 전까지 전 주인이 추가 대출을 받거나 압류가 붙을 수 있어요. 잔금 전날 또는 당일 아침에 반드시 다시 발급해서 확인해야 합니다.</div>'
+;})()};
+
+C['스크립트'] = {ico:'📞', tit:'황과장 상담 스크립트 흐름', html: (function(){
+return '<div class="def">처음 대화에서 어떻게 하느냐가 계약까지 이어지느냐 아니냐를 결정해요. 황과장(돌고래하우스)의 상담 흐름을 단계별로 정리했어요. 상황에 따라 유연하게 응용하세요.</div>'
+
++'<p class="sect-lead"><strong>1단계 — 첫 문의 전화 (파악 단계)</strong></p>'
++'<p>고객이 먼저 전화하거나 문자를 보낸 경우, 또는 내가 먼저 연락하는 경우 모두 처음에는 "파악"에 집중해야 해요. 팔려고 서두르면 안 됩니다.</p>'
++'<div class="slist">'
++'<div class="si"><div class="sn">Q1</div><div class="st">"지금 어디 살고 계세요? 전세예요, 월세예요?" → 현재 주거 형태 파악</div></div>'
++'<div class="si"><div class="sn">Q2</div><div class="st">"보증금이 얼마 되세요? / 월세는 얼마 내세요?" → 자금 규모 파악</div></div>'
++'<div class="si"><div class="sn">Q3</div><div class="st">"직장은 어디 다니세요? 4대보험 가입되어 계신가요?" → 소득·신용 상황 파악</div></div>'
++'<div class="si"><div class="sn">Q4</div><div class="st">"지금 대출이 있으신가요? 카드론이나 캐피탈 대출도요." → 기대출 현황 파악</div></div>'
++'<div class="si"><div class="sn">Q5</div><div class="st">"집 사는 건 처음이세요? 이전에 집 가져보신 적 있으세요?" → 생애최초 여부 파악</div></div>'
++'</div>'
+
++'<p class="sect-lead"><strong>2단계 — 상황 분석 및 솔루션 설명</strong></p>'
++'<p>파악한 정보를 바탕으로 가능한 구조를 설명해줘요. 이때 고객이 느끼는 핵심 감정은 "나도 정말 집 살 수 있나?"예요. 이 감정을 건드려야 해요.</p>'
++'<div class="def">"지금 전세 보증금 8천이 있으신데, 매달 월세처럼 내는 원리금이 그 금액보다 적거나 비슷한 집 구조를 만들어드릴 수 있어요. 지금 내는 월세 60만원이면 집을 살 수도 있는 분이세요."</div>'
+
++'<p class="sect-lead"><strong>3단계 — 고객 유형별 접근법</strong></p>'
++'<div class="slist">'
++'<div class="si"><div class="sn">A타입</div><div class="st"><strong>소득 낮음 + 기대출 있음</strong> → 담보 위주 물건 + 기대출 대환 플랜 → "일단 기존 대출 먼저 정리하고 집 사는 구조 설계해드릴게요."</div></div>'
++'<div class="si"><div class="sn">B타입</div><div class="st"><strong>신용 낮음 + 취업 중</strong> → 감정가 높은 물건 + 재직 기간 쌓기 → "지금 바로는 어렵지만 3개월 후에 가능한 구조예요. 미리 물건 보러 가시죠."</div></div>'
++'<div class="si"><div class="sn">C타입</div><div class="st"><strong>전세 불안감 강함</strong> → 전세사기 공감 + 소유권 안전성 강조 → "전세는 언제까지 불안하게 사실 거예요. 지금 보증금으로 내 집 만들어드릴게요."</div></div>'
++'<div class="si"><div class="sn">D타입</div><div class="st"><strong>자금 여유 있음</strong> → 좋은 물건 + R 높은 매물 → "이 물건은 감정가도 좋고, 분양사에서 취득세까지 지원해줘요. 직접 보시면 마음에 드실 거예요."</div></div>'
++'</div>'
+
++'<p class="sect-lead"><strong>4단계 — 현장 방문 유도</strong></p>'
++'<div class="def">"상담은 무료예요. 한 번 직접 보시면 느낌이 다르거든요. 이번 주 토요일 오전이 어떠세요? 제가 직접 안내해드릴게요."</div>'
+
++'<p class="sect-lead"><strong>5단계 — 계약 후 관리</strong></p>'
++'<div class="irow"><span class="lb">대출 연결</span><span class="vl">대출 전문 컨설턴트와 연결해서 최적의 대출 구조 설계</span></div>'
++'<div class="irow"><span class="lb">진행 상황 공유</span><span class="vl">대출 심사 진행 상황을 고객에게 실시간 공유해서 불안감 해소</span></div>'
++'<div class="irow"><span class="lb">등기 후 입주 확인</span><span class="vl">소유권 이전 등기 완료 후 전입신고·하자 점검 안내</span></div>'
++'<div class="tip"><strong>💡 핵심 멘트 (반드시 외우기)</strong><br>"지금 전세 사시죠? 매달 내는 금액이랑 비슷하거나 더 적게 내면서 내 집 가질 수 있는 구조 설계해드릴게요. 상담은 무료니까 한번 와보세요."</div>'
+;})()};
+
+C['용어사전'] = {ico:'📚', tit:'분양 현장 필수 용어 사전', html: (function(){
+return '<div class="def">신축빌라 분양 현장과 속지에서 자주 나오는 용어들을 한눈에 정리했어요. 이 용어들을 모르면 속지를 읽거나 분양사와 대화할 때 엉뚱한 이해를 할 수 있어요.</div>'
+
++'<p class="sect-lead"><strong>📐 면적 관련 용어</strong></p>'
++'<table class="tbl"><thead><tr><th>용어</th><th>뜻</th><th>예시</th></tr></thead><tbody>'
++'<tr><td class="hc">전용면적</td><td>내 집만 쓰는 공간 (방·거실·화장실·주방)</td><td>60㎡ (약 18평)</td></tr>'
++'<tr><td class="hg">공용면적</td><td>계단·복도·엘리베이터·주차장 등 공동 사용</td><td>10㎡</td></tr>'
++'<tr><td class="hgr">실사용면적</td><td>전용+서비스 면적. 실제 체감 크기</td><td>75㎡ (약 22.7평)</td></tr>'
++'<tr><td>분양면적</td><td>전용+공용 합계 (계약서에 적히는 면적)</td><td>70㎡</td></tr>'
++'<tr><td class="hgr">대지지분</td><td>땅을 세대별로 나눈 내 몫</td><td>25㎡</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>💰 대출·금융 관련 용어</strong></p>'
++'<table class="tbl"><thead><tr><th>용어</th><th>뜻</th></tr></thead><tbody>'
++'<tr><td class="hc">담보실입</td><td>담보대출 후 고객이 직접 내야 할 돈. 분양가-담보대출=담보실입</td></tr>'
++'<tr><td class="hg">은행융자</td><td>담보대출의 다른 말. 속지의 "은행융자 2억" = 담보대출 한도 2억</td></tr>'
++'<tr><td>생초(생초담보)</td><td>생애최초. 처음 집을 사는 경우 LTV 80%까지 가능</td></tr>'
++'<tr><td>회사채</td><td>법인 명의로 받는 대출. 개인 신용과 별도 계정</td></tr>'
++'<tr><td>대환</td><td>기존 대출을 새 대출로 갈아타는 것</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>🏢 분양 현장 용어</strong></p>'
++'<table class="tbl"><thead><tr><th>용어</th><th>뜻</th></tr></thead><tbody>'
++'<tr><td class="hg">R (리베이트)</td><td>컨설턴트 성공 수수료. R20 = 2,000만원</td></tr>'
++'<tr><td>분사</td><td>분양사무실 (현장 계약 장소)</td></tr>'
++'<tr><td>정찰제</td><td>가격 협상 없이 공개 가격 그대로 판매</td></tr>'
++'<tr><td>더블인정 X</td><td>두 명의 컨설턴트가 같은 고객으로 R 청구 불가</td></tr>'
++'<tr><td class="hr">분양완료</td><td>이미 팔린 세대 (취소선이나 노란색으로 표시)</td></tr>'
++'<tr><td>분사201</td><td>분양사무실로 사용 중인 201호 세대</td></tr>'
++'</tbody></table>'
+
++'<p class="sect-lead"><strong>🏠 건물 구조 용어</strong></p>'
++'<table class="tbl"><thead><tr><th>용어</th><th>뜻</th></tr></thead><tbody>'
++'<tr><td>복층</td><td>2개 층이 계단으로 연결된 구조. 공간이 넓어 보이는 효과</td></tr>'
++'<tr><td>다락방</td><td>복층에서 위층 부분. 높이 1.5m 미만이면 면적에서 제외</td></tr>'
++'<tr><td>테라스</td><td>1층의 외부 개인 공간. 정원처럼 사용 가능</td></tr>'
++'<tr><td>옥상테라스</td><td>최상층의 외부 개인 공간</td></tr>'
++'<tr><td>왕테라스</td><td>일반 테라스보다 넓은 테라스</td></tr>'
++'<tr><td>베란다</td><td>거실·방과 연결된 외부 반개방 공간. 발코니와 비슷한 의미</td></tr>'
++'<tr><td>자주식 주차</td><td>사람이 직접 차를 주차하는 방식. 기계식보다 편리하고 안전</td></tr>'
++'<tr><td>기계식 주차</td><td>기계가 차를 이동시켜 주차. 고장 위험 있음</td></tr>'
++'</tbody></table>'
+;})()};
+
+C['광고금지'] = {ico:'⚠️', tit:'광고 금지·분양가 노출 금지 이유', html: (function(){
+return '<div class="def">신축빌라 속지 대부분에 "네이버·직방·다방·블로그·SNS 광고 금지", "분양가 온라인 노출 절대 금지"라는 문구가 빠지지 않아요. 왜 이렇게 철저하게 막는 걸까요? 단순히 보안 때문이 아니라 여러 가지 실질적인 이유가 있어요.</div>'
+
++'<p class="sect-lead"><strong>이유 1 — 대출 한도가 줄어들 수 있어요</strong></p>'
++'<p>은행이 감정평가를 의뢰할 때, 감정평가사는 해당 건물의 주변 시세와 함께 <strong>온라인 공개된 분양가</strong>도 참고해요. 만약 분양가가 온라인에 공개되어 있으면 감정평가사가 그 가격 이상으로 감정가를 올려주기 어려워져요. 감정가가 분양가와 같거나 낮으면 전액대출 구조가 깨지고 실입금이 발생해요. 즉 광고 금지는 <strong>전액대출 구조를 지키기 위한 것</strong>이에요.</p>'
+
++'<p class="sect-lead"><strong>이유 2 — 다른 계약자들 사이에 형평성 문제</strong></p>'
++'<p>같은 단지에서도 호수마다 조건이 달라요. A호수는 분양가 3억에 취득세 지원, B호수는 3억 1천에 취득세 미지원이라면, 온라인에 특정 조건이 공개됐을 때 조건이 나쁜 계약자가 "왜 우리만 이래요?"라고 문제를 제기할 수 있어요. 분양사 입장에서 불필요한 분쟁을 만들지 않으려는 거예요.</p>'
+
++'<p class="sect-lead"><strong>이유 3 — R(리베이트) 구조 보호</strong></p>'
++'<p>R 금액이 외부에 알려지면 소비자 단체나 언론에서 "분양사가 리베이트를 잔뜩 줘서 그 비용이 분양가에 포함된 거 아니냐"라고 문제 제기할 수 있어요. 또 경쟁 분양 현장에서 R 구조를 파악해서 가격 경쟁에 활용할 수도 있어요. 이런 것들을 막기 위해 비공개를 요구합니다.</p>'
+
++'<p class="sect-lead"><strong>이유 4 — 공인중개사법·부동산 표시 광고법 문제</strong></p>'
++'<p>부동산 광고는 <strong>공인중개사 또는 중개법인</strong>이 해야 합법이에요. 무자격자(일반인·컨설턴트)가 네이버 부동산·직방·다방에 분양 광고를 올리면 공인중개사법 위반이 될 수 있어요. 또 허위·과장 광고는 표시광고법 위반이에요. 분양사 입장에서는 법적 리스크를 피하기 위해 광고를 금지하는 거예요.</p>'
+
++'<div class="tip"><strong>💡 돌고래하우스의 전략</strong><br>광고 금지 물건은 온라인에서 정보를 찾을 수 없어요. 그래서 직접 발로 뛰어서 정보를 모으고, 오프라인 상담을 통해서만 고객에게 연결하는 돌고래하우스가 경쟁력을 가질 수 있어요. 광고 금지 = 희소 정보 = 우리의 가치입니다.</div>'
++'<div class="wrn"><strong>⚠️ 실수로 온라인에 공유하면?</strong><br>컨설턴트가 실수로 카카오톡 오픈채팅이나 SNS에 분양가·R 금액을 공유하면 분양사로부터 R 미지급 또는 손해배상 청구를 받을 수 있어요. 속지 사진도 공유하면 안 됩니다.</div>'
+;})()};
+
+function openModal(key) {
+  var content = C[key];
+  if (!content) return;
+  document.getElementById('mIco').textContent = content.ico;
+  document.getElementById('mTit').textContent = content.tit;
+  document.getElementById('mBody').innerHTML = content.html;
+  document.getElementById('ov').classList.add('open');
+  document.getElementById('modal').scrollTop = 0;
+  document.body.style.overflow = 'hidden';
+}
+
+function closeModal() {
+  document.getElementById('ov').classList.remove('open');
+  document.body.style.overflow = '';
+}
+
+function handleOvClick(e) {
+  if (e.target === document.getElementById('ov')) closeModal();
+}
+
+function toggleSub(btn) {
+  var inner = btn.nextElementSibling;
+  if (!inner) return;
+  var isOpen = inner.classList.contains('open');
+  inner.classList.toggle('open', !isOpen);
+  btn.classList.toggle('open', !isOpen);
+  var span = btn.querySelector('span:first-child');
+  if (span) {
+    span.textContent = isOpen
+      ? '📌 조심해야 할 것 — 현장에서 들을 수 있는 방법들 (클릭해서 열기)'
+      : '📌 조심해야 할 것 — 닫기';
+  }
+}
+
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeModal();
+});
+</script>
+</body>
+</html>
